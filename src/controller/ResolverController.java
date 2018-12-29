@@ -51,20 +51,23 @@ public class ResolverController {
     public int heuristicResolver() {
         int resultSumMin = 0;
 
-        //ordenamos la lista de ordenes de forma creciente con respecto a la capacidad
+        //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
+        int tipoDeOrdenamientoPrueba = 1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
+        
+        //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
         orders_demand.sort(new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                return o1.getDemand() - o2.getDemand();
+                return (o1.getDemand() - o2.getDemand())*tipoDeOrdenamientoPrueba;
             }
         });
 
-        //ordenamos la lista de vehiculos de forma creciente con respecto a la capacidad y creciente con respecto al precio
+        //ordenamos la lista de vehiculos de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad y creciente con respecto al precio
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
                 int compareByVol = o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume();
-
+                compareByVol*=tipoDeOrdenamientoPrueba;
                 return compareByVol == 0 ? o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost() : compareByVol;
             }
         });
