@@ -62,7 +62,7 @@ public class ResolverController {
             }
         });
 
-        //ordenamos la lista de vehiculos de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad y creciente con respecto al precio
+        //ordenamos la lista de vehiculos de forma creciente con respecto al precio y $tipoDeOrdenamientoPrueba con respecto a la capacidad
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
