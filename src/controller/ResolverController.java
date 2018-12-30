@@ -52,7 +52,7 @@ public class ResolverController {
         int resultSumMin = 0;
 
         //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
-        int tipoDeOrdenamientoPrueba = 1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
+        int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
         
         //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
         orders_demand.sort(new Comparator<Order>() {
@@ -66,9 +66,8 @@ public class ResolverController {
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
-                int compareByVol = o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume();
-                compareByVol*=tipoDeOrdenamientoPrueba;
-                return compareByVol == 0 ? o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost() : compareByVol;
+                int compareByCost = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
+                return compareByCost == 0 ?  (o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume())*tipoDeOrdenamientoPrueba : compareByCost;
             }
         });
 
