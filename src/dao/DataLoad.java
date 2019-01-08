@@ -126,7 +126,7 @@ public class DataLoad {
             ArrayList<ArrayList<Object>> lista = new ArrayList<ArrayList<Object>>();
 
             for (int i = 0; i < resultInt.size(); i++) {
-                jdk.nashorn.api.scripting.ScriptObjectMirror filaI = (jdk.nashorn.api.scripting.ScriptObjectMirror) resultInt.get(i);
+                jdk.nashorn.api.scripting.ScriptObjectMirror filaI = (jdk.nashorn.api.scripting.ScriptObjectMirror) resultInt.get(i+"");
 
                 lista.add(new ArrayList<Object>(filaI.values()));
 
