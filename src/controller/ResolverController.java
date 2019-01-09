@@ -33,7 +33,7 @@ public class ResolverController {
 
     public int cost_for_express = 1000;//ca the unit cost for an express delivery.
 
-    public ArrayList<ArrayList<Integer>> elect_vehicle;
+   
 
     private static ResolverController instance;
 
@@ -99,11 +99,10 @@ public class ResolverController {
                                 //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO(Di X Th)
                                 resultSumMin += order.getDemand() * satellite_time_slot.get(h).getTarif();
 
-                                //(FALTA BUSCAR CUAL ES EL COSTO X PARADA) 
-                                resultSumMin += 0; //agregamos el costo por parada
+                                //agregamos el costo por parada para el vehicle k en el instante de tiempo h
+                                resultSumMin += vehic.getCost_per_stop().get(h);
 
                                 //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (FALTA REVISAR PORQUE DEBEN TENER UN COSTO DIFERENTE EN CADA INSTANTE DE TIEMPO)
-                                //EN CASO DE QUE EL COSTO SEA elect_vehicle[][] se tedria que sumar elect_vehicle[vehic.getPosition()][h]
                                 resultSumMin += vehic.getVtype().getVeicCost();
 
                                 //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
@@ -202,11 +201,10 @@ public class ResolverController {
                 //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO h=timeAvailable (Di X Th)
                 resultSumMin += order.getDemand() * satellite_time_slot.get(timeAvailable).getTarif();
 
-                //(FALTA BUSCAR CUAL ES EL COSTO X PARADA) 
-                resultSumMin += 0; //agregamos el costo por parada
+                //agregamos el costo por parada para el vehicle k en el instante de tiempo h
+                resultSumMin += vehicleBetterRandom.getCost_per_stop().get(timeAvailable);
 
                 //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (FALTA REVISAR PORQUE DEBEN TENER UN COSTO DIFERENTE EN CADA INSTANTE DE TIEMPO)
-                //EN CASO DE QUE EL COSTO SEA elect_vehicle[][] se tedria que sumar elect_vehicle[vehic.getPosition()][h]
                 resultSumMin += vehicleBetterRandom.getVtype().getVeicCost();
 
                 //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL

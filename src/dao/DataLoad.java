@@ -63,15 +63,16 @@ public class DataLoad {
                 m.VType.add(new VeicType(veicCost.get(i), veicVolume.get(i)));
             }
 
+             //cargando elect_vehicle (Cost per Stop)
+            ArrayList<ArrayList<Integer>> elect_vehicle = evalMatrix(p.getProperty("Elect_vehicle"));
+            
+            
             //cargando los vehiculos y asociandole su tipo
             List<Integer> veicType = evalList(p.getProperty("VeicType"));
             m.vehicles = new ArrayList<Vehicle>();
             for (int i = 0; i < m.vehiclesCount; i++) {
-                m.vehicles.add(new Vehicle(i, m.VType.get(veicType.get(i)-1)));
+                m.vehicles.add(new Vehicle(i,elect_vehicle.get(i), m.VType.get(veicType.get(i)-1)));
             }
-
-           //cargando elect_vehicle
-            m.elect_vehicle = evalMatrix(p.getProperty("Elect_vehicle"));
 
             /*for (Object valor : p.keySet()) {
                 System.out.println(valor +" : "+ p.get(valor));
@@ -82,7 +83,8 @@ public class DataLoad {
     }
 
     static int getInt(String value) {
-        return Integer.parseInt(value.substring(0, value.length() - 1));
+        value = value.replace(" ", "").replace("=", "").replace(":", "").replace(";", "");
+        return Integer.parseInt(value);
     }
 
     /**
