@@ -16,7 +16,7 @@ public class Vehicle {
     int position;
     //int [] capacity; //capacity associated to the vehicle k (This) at the time slot h
     //int [] ﬁxed_cost;//ﬁxed cost associated to the vehicle k (This) at the time slot h
-    List<Integer> cost_per_stop;//Let ch k be the cost per stop.
+    List<Integer> cost_per_stop;//Let ch k be the cost per stop in each timeSlot
     
     VeicType vtype; // 
 
@@ -25,8 +25,6 @@ public class Vehicle {
         this.cost_per_stop = cost_per_stop;
         this.vtype = vtype;
     }
-
-    
     
     
 

@@ -10,6 +10,7 @@ import domain.Order;
 import domain.SatelliteInTimeSlot;
 import domain.Vehicle;
 import domain.VeicType;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,12 @@ import javax.script.ScriptException;
  */
 public class DataLoad {
     
-    public static String fileAddress;
-
-    public static void loadData() {
+    
+    public static void loadData(ResolverController m, File dataSet) {
         try {
-            ResolverController m = ResolverController.getInstance();
-
+             
             Properties p = new Properties();
-            p.load(new FileReader(fileAddress));
+            p.load(new FileReader(dataSet.getName()));
 
             //cargando los datos
             m.orders = getInt(p.getProperty("m"));
@@ -52,7 +51,7 @@ public class DataLoad {
             List<Integer> tarif = evalList(p.getProperty("Tarif"));
             m.satellite_time_slot = new ArrayList<SatelliteInTimeSlot>();
             for (int i = 0; i < depot_Cap.size(); i++) {
-                m.satellite_time_slot.add(new SatelliteInTimeSlot(depot_Cap.get(i), tarif.get(i)));
+                m.satellite_time_slot.add(new SatelliteInTimeSlot(i, depot_Cap.get(i), tarif.get(i)));
             }
 
             //Cargando los tipos de vehiculos
@@ -78,7 +77,7 @@ public class DataLoad {
                 System.out.println(valor +" : "+ p.get(valor));
             }*/
         } catch (Exception ex) {
-            Logger.getLogger(DataLoad.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

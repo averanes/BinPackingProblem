@@ -10,9 +10,13 @@ import domain.Order;
 import domain.SatelliteInTimeSlot;
 import domain.Vehicle;
 import domain.VeicType;
+import domain.PosValue;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -33,15 +37,14 @@ public class ResolverController {
 
     public int cost_for_express = 1000;//ca the unit cost for an express delivery.
 
-   
-
     private static ResolverController instance;
 
-    public static ResolverController getInstance() {
+    public static ResolverController getInstance(File dataSet) {
         if (instance == null) {
             instance = new ResolverController();
-            DataLoad.loadData();
         }
+
+        DataLoad.loadData(instance, dataSet);
         return instance;
     }
 
@@ -49,7 +52,170 @@ public class ResolverController {
 
     }
 
+    //Optimizado en base a disminuir el costo por parada
     public int heuristicResolver() {
+        int resultSumMin = 0;
+
+        //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
+        int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
+
+        //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
+        orders_demand.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return (o1.getDemand() - o2.getDemand()) * tipoDeOrdenamientoPrueba;
+            }
+        });
+
+        
+        //El costo por parada aporta la mayor variacion de valor, entonces optimizando con respecto a esto se obtienen los mejores resultados
+        //Por cada instante de tiempo sumamos el total de los costos por parada
+         List<PosValue> timeSlotOrganized = new ArrayList<PosValue>();
+         for (int i = 0; i < timeslots; i++) {
+             timeSlotOrganized.add(new PosValue(i, 0));
+         }
+         
+         for (int i = 0; i < vehiclesCount; i++) {
+             for (int j = 0; j < timeslots; j++) {
+                timeSlotOrganized.get(j).sumValue( vehicles.get(i).getCost_per_stop().get(j));
+             }
+         }
+         
+         //organizamos los instantes de tiempo con respecto a la suma de costos por parada (ascendente)
+         timeSlotOrganized.sort(new Comparator<PosValue>() {
+            @Override
+            public int compare(PosValue o1, PosValue o2) {
+                return o1.value - o2.value;
+            }
+         });
+         //timeSlotOrganized es siempre [2, 0, 1] con los juegos de datos que tenemos
+         
+         
+         //ordenamos la lista de vehiculos de forma creciente con respecto a costos x parada en los instantes de tiempo q estan ordenados, al costo y al volumen del vehiculo descendente
+        vehicles.sort(new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle o1, Vehicle o2) {
+                
+                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos)-o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
+                if(comparator == 0 && timeSlotOrganized.size()> 1)comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).pos);
+                if(comparator == 0 && timeSlotOrganized.size()> 2)comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).pos);
+                if(comparator == 0 )comparator =  o1.getVtype().getVeicCost()- o2.getVtype().getVeicCost();
+                
+                return comparator == 0 ? (o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume()) * tipoDeOrdenamientoPrueba : comparator;
+            }
+        });
+         
+        int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
+        int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
+        boolean orderIsSatisfied = false; //Se utiliza para controlar el (CONSTRAIN 3)
+
+        HashMap<Integer, String> ordersByVehicleOnlyForTestSolution = new HashMap<Integer, String>();//Est variable es solo para almacenar datos para probar la solucion
+        
+        //CALCULANDO LA FUNCION OBJETIVO
+        for (int i = 0; i < orders; i++) {
+            Order order = orders_demand.get(i);
+            orderIsSatisfied = false;
+           
+            for (int h1 = 0; h1 < timeslots && orderIsSatisfied == false; h1++) {
+                int h = timeSlotOrganized.get(h1).pos;
+                
+                //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
+                if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
+
+                    //recorremos los vehiculos para ver cual puede satisfacer la orden en el tiempo h mientras que la orden no sea satisfecha
+                    for (int k = 0; k < vehiclesCount; k++) {
+                        Vehicle vehic = vehicles.get(k);
+
+                        //(CONSTRAIN 2) Si la orden i puede ser tomada por el vehiculo k en el instante de tiempo h
+                        if (vehicleUseCapacityInTime[k][h] + order.getDemand() <= vehic.getVtype().getVeicVolume()) {
+
+                            //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO(Di X Th)
+                            resultSumMin += order.getDemand() * satellite_time_slot.get(h).getTarif();
+
+                            //agregamos el costo por parada para el vehicle k en el instante de tiempo h
+                            resultSumMin += vehic.getCost_per_stop().get(h);
+
+                            //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (Si es la primera demanda para el vehiculo en este instante de tiempo)
+                            if (vehicleUseCapacityInTime[k][h] == 0) { //Si esto no es 0 es porque ya se sumo el vehiculo k en el instante de tiempo h
+                                resultSumMin += vehic.getVtype().getVeicCost();
+                            }
+                            
+                            //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
+                            vehicleUseCapacityInTime[k][h] += order.getDemand(); //Agregamos la demanda al vehiculo k en el instante de tiempo h
+                            orderIsSatisfied = true; //marcamos que la orden fue satisfecha
+                            demandInTime[h] += order.getDemand(); //Agregamos la demanda al instante de tiempo h
+                            
+                            //estos datos solo se guardan para realizar las pruebas de la solucion
+                            String ordenes = "";
+                            if(ordersByVehicleOnlyForTestSolution.containsKey(k)){
+                            ordenes += ordersByVehicleOnlyForTestSolution.get(k)+", ";
+                            }
+                            ordenes += i+" demand: "+order.getDemand();
+                            ordersByVehicleOnlyForTestSolution.put(k, ordenes); 
+                            
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            //si no se puede enviar con ningun vehiculo se envia express
+            if (!orderIsSatisfied) {
+                resultSumMin += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
+
+                System.out.println("Orden " + i + " Vehicle EXPRESS");
+            }
+        }
+
+        /*
+        //Comprobacion de la solucion
+        
+        //comprobando Satelite en instante de tiempo (capacidad con usado)
+        for (int h = 0; h < timeslots; h++) {
+          System.out.println("Satelite TimeSlot "+h+" Capacity Total "+satellite_time_slot.get(h).getCapacity()+" Used "+demandInTime[h]); 
+        }
+        System.out.println("");
+        
+        
+        //comprobando ordenes en vehiculos
+        int total = 0;
+        for (int i = 0; i < orders; i++) {
+            total += orders_demand.get(i).getDemand();
+        }
+        System.out.println("Suma de demandas "+total);
+        
+        for (Map.Entry<Integer, String> en : ordersByVehicleOnlyForTestSolution.entrySet()) {
+            Integer key = en.getKey();
+            String value = en.getValue();
+           
+            System.out.println("Vehiculo: "+vehicles.get(key).getPosition()+" Ordenes: "+value); 
+        }
+        System.out.println("");
+        
+        //comprobando vehiculos (capacidad total y capacidad usada)
+        total = 0; 
+        int vehicleUsedCount = 0;
+         for (int i = 0; i < vehiclesCount; i++) {
+           boolean isUsedVehic = false;
+            for (int j = 0; j < timeslots; j++) {
+                total += vehicleUseCapacityInTime[i][j];
+                
+                if(vehicleUseCapacityInTime[i][j]!=0){
+                    System.out.println("Vehicle "+vehicles.get(i).getPosition()+" Capacity Total "+vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot "+j+": "+vehicleUseCapacityInTime[i][j]);
+                    isUsedVehic = true;
+                }
+                
+            }
+            if(isUsedVehic)vehicleUsedCount++;
+        }
+System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades ocupadas "+total);
+        */
+        return resultSumMin;
+    }
+
+    //Optimizado en base a disminuir la Tarifa por la demanda (di x Th) MEJORADO
+    public int heuristicResolverGoodSolutionButBadResult() {
         int resultSumMin = 0;
 
         //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
@@ -72,6 +238,100 @@ public class ResolverController {
             }
         });
 
+        //ordenamos la lista de satellite_time_slot con respecto a la tarifa, de forma diferente al ordenamiento de las demandas de las ordenes
+        satellite_time_slot.sort(new Comparator<SatelliteInTimeSlot>() {
+            @Override
+            public int compare(SatelliteInTimeSlot o1, SatelliteInTimeSlot o2) {
+                return (o1.getTarif() - o2.getTarif()) * (tipoDeOrdenamientoPrueba * -1);
+            }
+        });
+
+        int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
+        int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
+        boolean orderIsSatisfied = false; //Se utiliza para controlar el (CONSTRAIN 3)
+
+        //CALCULANDO LA FUNCION OBJETIVO
+        for (int i = 0; i < orders; i++) {
+            Order order = orders_demand.get(i);
+            orderIsSatisfied = false;
+
+            for (int hSatellite = 0; hSatellite < timeslots && orderIsSatisfied == false; hSatellite++) {
+                int h = satellite_time_slot.get(hSatellite).getTimeSlot(); //Real Time Slot ordered by Sattelite Tarif
+
+                //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
+                if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(hSatellite).getCapacity()) {
+
+                    //recorremos los vehiculos para ver cual puede satisfacer la orden mientras que la orden no sea satisfecha
+                    for (int k = 0; k < vehiclesCount; k++) {
+                        Vehicle vehic = vehicles.get(k);
+
+                        //(CONSTRAIN 2) Si la orden i puede ser tomada por el vehiculo k en el instante de tiempo h
+                        if (vehicleUseCapacityInTime[k][h] + order.getDemand() <= vehic.getVtype().getVeicVolume()) {
+
+                            //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO(Di X Th)
+                            resultSumMin += order.getDemand() * satellite_time_slot.get(hSatellite).getTarif();
+
+                            //agregamos el costo por parada para el vehicle k en el instante de tiempo h
+                            resultSumMin += vehic.getCost_per_stop().get(h);
+
+                            //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (Si es la primera vez que se utiliza el vehiculo en este instante de tiempo)
+                            if (vehicleUseCapacityInTime[k][h] == 0) { //Si esto no es 0 es porque ya se sumo
+                                resultSumMin += vehic.getVtype().getVeicCost();
+                            }
+
+                            //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
+                            vehicleUseCapacityInTime[k][h] += order.getDemand(); //Agregamos la demanda al vehiculo k en el instante de tiempo h
+                            orderIsSatisfied = true; //marcamos que la orden fue satisfecha
+                            demandInTime[h] += order.getDemand(); //Agregamos la demanda al instante de tiempo h
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            //si no se puede enviar con ningun vehiculo se envia express
+            if (!orderIsSatisfied) {
+                resultSumMin += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
+
+                System.out.println("Orden " + i + " Vehicle EXPRESS");
+            }
+        }
+
+        return resultSumMin;
+    }
+
+    //Optimizado en base a disminuir la Tarifa por la demanda (di x Th)  
+    public int heuristicResolverFirstVersion() {
+        int resultSumMin = 0;
+
+        //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
+        int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
+
+        //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
+         orders_demand.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return (o1.getDemand() - o2.getDemand()) * tipoDeOrdenamientoPrueba;
+            }
+        });
+
+        //ordenamos la lista de vehiculos de forma creciente con respecto al precio y $tipoDeOrdenamientoPrueba con respecto a la capacidad
+        vehicles.sort(new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle o1, Vehicle o2) {
+                int compareByCost = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
+                return compareByCost == 0 ? (o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume()) * tipoDeOrdenamientoPrueba : compareByCost;
+            }
+        });
+
+        //ordenamos la lista de satellite_time_slot con respecto a la tarifa, de forma diferente al ordenamiento de las demandas de las ordenes
+        satellite_time_slot.sort(new Comparator<SatelliteInTimeSlot>() {
+            @Override
+            public int compare(SatelliteInTimeSlot o1, SatelliteInTimeSlot o2) {
+                return (o1.getTarif() - o2.getTarif()) * (tipoDeOrdenamientoPrueba * -1);
+            }
+        });
         int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
         int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
         boolean orderIsSatisfied = false; //Se utiliza para controlar el (CONSTRAIN 3)
@@ -88,22 +348,26 @@ public class ResolverController {
                 //buscamos el 1er vehiculo que tenga capacidad para satisfacer la demanda de la orden i
                 if (vehic.getVtype().getVeicVolume() >= order.getDemand()) {
 
-                    for (int h = 0; h < timeslots; h++) {
+                    for (int hSatellite = 0; hSatellite < timeslots; hSatellite++) {
+
+                        int h = satellite_time_slot.get(hSatellite).getTimeSlot(); //Real Time Slot ordered by Sattelite Tarif
 
                         //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
-                        if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
+                        if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(hSatellite).getCapacity()) {
 
                             //(CONSTRAIN 2) Si la orden i puede ser tomada por el vehiculo k en el instante de tiempo h
                             if (vehicleUseCapacityInTime[k][h] + order.getDemand() <= vehic.getVtype().getVeicVolume()) {
 
                                 //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO(Di X Th)
-                                resultSumMin += order.getDemand() * satellite_time_slot.get(h).getTarif();
+                                resultSumMin += order.getDemand() * satellite_time_slot.get(hSatellite).getTarif();
 
                                 //agregamos el costo por parada para el vehicle k en el instante de tiempo h
                                 resultSumMin += vehic.getCost_per_stop().get(h);
 
-                                //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (FALTA REVISAR PORQUE DEBEN TENER UN COSTO DIFERENTE EN CADA INSTANTE DE TIEMPO)
-                                resultSumMin += vehic.getVtype().getVeicCost();
+                                //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (Si es la primera vez que se utiliza el vehiculo en este instante de tiempo)
+                                if (vehicleUseCapacityInTime[k][h] == 0) { //Si esto no es 0 es porque ya se sumo
+                                    resultSumMin += vehic.getVtype().getVeicCost();
+                                }
 
                                 //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
                                 vehicleUseCapacityInTime[k][h] += order.getDemand(); //Agregamos la demanda al vehiculo k en el instante de tiempo h
@@ -119,16 +383,15 @@ public class ResolverController {
             //si no se puede enviar con ningun vehiculo se envia express
             if (!orderIsSatisfied) {
                 resultSumMin += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
-                
-                 System.out.println("Orden "+i+" Vehicle EXPRESS");
+
+                System.out.println("Orden " + i + " Vehicle EXPRESS");
             }
         }
-        
-         
-         
+
         return resultSumMin;
     }
 
+    //Grasp basandonos en las primeras versiones del greedy, ya no se acerca a la solucion factible
     public int GRASP_metaHeuristicResolver() {
         int resultSumMin = 0;
 
@@ -154,26 +417,26 @@ public class ResolverController {
 
         int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
         int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
-        
+
         //CALCULANDO LA FUNCION OBJETIVO
         for (int i = 0; i < orders; i++) {
             Order order = orders_demand.get(i);
-            
+
             List<Vehicle> vehiclesCandidates = new ArrayList<Vehicle>();
             List<Integer> timeAvailableForEachVehicle = new ArrayList<Integer>(); //instante de tiempo disponible por cada posible vehiculo
 
             //recorremos los vehiculos para ver cual puede satisfacer la orden mientras que la orden no sea satisfecha
             for (int k = 0; k < vehiclesCount && vehiclesCandidates.size() < 3; k++) {
                 Vehicle vehic = vehicles.get(k);
-                
-                
+
                 //buscamos el 1er vehiculo que tenga capacidad para satisfacer la demanda de la orden i
                 if (vehic.getVtype().getVeicVolume() >= order.getDemand()) {
 
-                    for (int h = 0; h < timeslots; h++) {
+                    for (int hSatellite = 0; hSatellite < timeslots; hSatellite++) {
+                        int h = satellite_time_slot.get(hSatellite).getTimeSlot(); //Real Time Slot ordered by Sattelite Tarif
 
                         //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
-                        if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
+                        if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(hSatellite).getCapacity()) {
 
                             //(CONSTRAIN 2) Si la orden i puede ser tomada por el vehiculo k en el instante de tiempo h
                             if (vehicleUseCapacityInTime[vehic.getPosition()][h] + order.getDemand() <= vehic.getVtype().getVeicVolume()) {
@@ -185,7 +448,6 @@ public class ResolverController {
                         }
                     }
 
-                    
                 }
             }
 
@@ -196,32 +458,29 @@ public class ResolverController {
                 Vehicle vehicleBetterRandom = vehiclesCandidates.get(ramdomValue); //seleccionamos un vehiculo aleatoriamente
                 int timeAvailable = timeAvailableForEachVehicle.get(ramdomValue); //tiempo disponible del vehiculo seleccionado aleatoriamente
 
-                
-                
                 //AGREGAMOS EL COSTO DE LA DEMANDA POR LA TARIFA EN EL INSTANTE DE TIEMPO h=timeAvailable (Di X Th)
                 resultSumMin += order.getDemand() * satellite_time_slot.get(timeAvailable).getTarif();
 
                 //agregamos el costo por parada para el vehicle k en el instante de tiempo h
                 resultSumMin += vehicleBetterRandom.getCost_per_stop().get(timeAvailable);
 
-                //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (FALTA REVISAR PORQUE DEBEN TENER UN COSTO DIFERENTE EN CADA INSTANTE DE TIEMPO)
-                resultSumMin += vehicleBetterRandom.getVtype().getVeicCost();
+                //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (Si es la primera vez que se utiliza el vehiculo en este instante de tiempo)
+                if (vehicleUseCapacityInTime[vehicleBetterRandom.getPosition()][timeAvailable] == 0) { //Si esto no es 0 es porque ya se sumo
+                    resultSumMin += vehicleBetterRandom.getVtype().getVeicCost();
+                }
 
                 //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
                 vehicleUseCapacityInTime[vehicleBetterRandom.getPosition()][timeAvailable] += order.getDemand(); //Agregamos la demanda al vehiculo en su posicion y en el instante de tiempo timeAvailable
                 demandInTime[timeAvailable] += order.getDemand(); //Agregamos la demanda al instante de tiempo timeAvailable
-                
-                
-            }
-            else {//si no se puede enviar con ningun vehiculo se envia express
+
+            } else {//si no se puede enviar con ningun vehiculo se envia express
                 resultSumMin += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
-                
-                
+
             }
         }
 
-      /*
-        Comprobacion de la solucion
+        /*
+        Comprobacion de la solucion GRASP
         int total = 0;
         for (int i = 0; i < orders; i++) {
             total += orders_demand.get(i).getDemand();
@@ -248,8 +507,6 @@ public class ResolverController {
             System.out.println();
         }
 System.out.println("Suma de capacidades ocupadas "+total);*/
-        
-        
         return resultSumMin;
     }
 }

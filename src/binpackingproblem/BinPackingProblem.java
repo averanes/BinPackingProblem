@@ -6,7 +6,8 @@
 package binpackingproblem;
 
 import controller.ResolverController;
-import dao.DataLoad;
+import java.io.File;
+import java.io.FilenameFilter;
 
 /**
  *
@@ -18,29 +19,42 @@ public class BinPackingProblem {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         DataLoad.fileAddress = "MPVSBPP_SET1_IT1000_ITV1_NT1_TS3_WT1_VT1_REP2.dat";//"MPVSBPP_SET1_IT200_ITV1_NT1_TS3_WT1_VT1_REP1.dat";
-         
-         ResolverController m = ResolverController.getInstance();
-         
-         long startTime = System.currentTimeMillis();
-         System.out.println("Heuristic Method Value: "+m.heuristicResolver() + " Delay in milliseconds: "+(System.currentTimeMillis()-startTime));
-         
-         
-         int countOfExecutions = 100;
-         startTime = System.currentTimeMillis();
-         int minValue = Integer.MAX_VALUE;
-         
-         for (int i = 0; i < countOfExecutions; i++) {
-            int resultTemp = m.GRASP_metaHeuristicResolver();
-            
-            if(resultTemp < minValue){
-            minValue = resultTemp;
+
+        //obtenemos la lista de datasets
+        File[] files = new File(".").listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".dat");
             }
+        });
+
+        //realizamos los algoritmos para cada dataset
+        int countOfExecutionsGRASP = 50;
+        for (int i = 0; i < files.length; i++) {
+
+            System.out.println(files[i].getName());
+
+            ResolverController m = ResolverController.getInstance(files[i]);
+
+            long startTime = System.currentTimeMillis();
+            System.out.println("Heuristic Method Value: " + m.heuristicResolver()+ " Delay in milliseconds: " + (System.currentTimeMillis() - startTime));
+
+            //********* GRASP ******
+            /*startTime = System.currentTimeMillis();
+            int minValue = Integer.MAX_VALUE;
+
+            for (int j = 0; j < countOfExecutionsGRASP; j++) {
+                int resultTemp = m.GRASP_metaHeuristicResolver();
+
+                if (resultTemp < minValue) {
+                    minValue = resultTemp;
+                }
+            }
+
+            System.out.println("GRASP Meta Heuristic Method Value: " + minValue + " Executions Count: " + countOfExecutionsGRASP + " Delay in milliseconds: " + (System.currentTimeMillis() - startTime));
+            */System.out.println();
         }
-         
-         System.out.println("GRASP Meta Heuristic Method Value: "+ minValue+ " Executions Count: "+countOfExecutions+ " Delay in milliseconds: "+(System.currentTimeMillis()-startTime));
-         
-         
+
     }
-    
+
 }
