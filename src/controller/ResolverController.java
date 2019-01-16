@@ -5,6 +5,7 @@
  */
 package controller;
 
+
 import dao.DataLoad;
 import domain.Order;
 import domain.SatelliteInTimeSlot;
@@ -12,12 +13,21 @@ import domain.Vehicle;
 import domain.VeicType;
 import domain.PosValue;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
@@ -67,58 +77,62 @@ public class ResolverController {
             }
         });
 
-        
         //El costo por parada aporta la mayor variacion de valor, entonces optimizando con respecto a esto se obtienen los mejores resultados
         //Por cada instante de tiempo sumamos el total de los costos por parada
-         List<PosValue> timeSlotOrganized = new ArrayList<PosValue>();
-         for (int i = 0; i < timeslots; i++) {
-             timeSlotOrganized.add(new PosValue(i, 0));
-         }
-         
-         for (int i = 0; i < vehiclesCount; i++) {
-             for (int j = 0; j < timeslots; j++) {
-                timeSlotOrganized.get(j).sumValue( vehicles.get(i).getCost_per_stop().get(j));
-             }
-         }
-         
-         //organizamos los instantes de tiempo con respecto a la suma de costos por parada (ascendente)
-         timeSlotOrganized.sort(new Comparator<PosValue>() {
+        List<PosValue> timeSlotOrganized = new ArrayList<PosValue>();
+        for (int i = 0; i < timeslots; i++) {
+            timeSlotOrganized.add(new PosValue(i, 0));
+        }
+
+        for (int i = 0; i < vehiclesCount; i++) {
+            for (int j = 0; j < timeslots; j++) {
+                timeSlotOrganized.get(j).sumValue(vehicles.get(i).getCost_per_stop().get(j));
+            }
+        }
+
+        //organizamos los instantes de tiempo con respecto a la suma de costos por parada (ascendente)
+        timeSlotOrganized.sort(new Comparator<PosValue>() {
             @Override
             public int compare(PosValue o1, PosValue o2) {
                 return o1.value - o2.value;
             }
-         });
-         //timeSlotOrganized es siempre [2, 0, 1] con los juegos de datos que tenemos
-         
-         
-         //ordenamos la lista de vehiculos de forma creciente con respecto a costos x parada en los instantes de tiempo q estan ordenados, al costo y al volumen del vehiculo descendente
+        });
+        //timeSlotOrganized es siempre [2, 0, 1] con los juegos de datos que tenemos
+
+        //ordenamos la lista de vehiculos de forma creciente con respecto a costos x parada en los instantes de tiempo q estan ordenados, al costo y al volumen del vehiculo descendente
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
-                
-                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos)-o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
-                if(comparator == 0 && timeSlotOrganized.size()> 1)comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).pos);
-                if(comparator == 0 && timeSlotOrganized.size()> 2)comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).pos);
-                if(comparator == 0 )comparator =  o1.getVtype().getVeicCost()- o2.getVtype().getVeicCost();
-                
+
+                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
+                if (comparator == 0 && timeSlotOrganized.size() > 1) {
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).pos);
+                }
+                if (comparator == 0 && timeSlotOrganized.size() > 2) {
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).pos);
+                }
+                if (comparator == 0) {
+                    comparator = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
+                }
+
                 return comparator == 0 ? (o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume()) * tipoDeOrdenamientoPrueba : comparator;
             }
         });
-         
+
         int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
         int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
         boolean orderIsSatisfied = false; //Se utiliza para controlar el (CONSTRAIN 3)
 
         HashMap<Integer, String> ordersByVehicleOnlyForTestSolution = new HashMap<Integer, String>();//Est variable es solo para almacenar datos para probar la solucion
-        
+
         //CALCULANDO LA FUNCION OBJETIVO
         for (int i = 0; i < orders; i++) {
             Order order = orders_demand.get(i);
             orderIsSatisfied = false;
-           
+
             for (int h1 = 0; h1 < timeslots && orderIsSatisfied == false; h1++) {
                 int h = timeSlotOrganized.get(h1).pos;
-                
+
                 //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
                 if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
 
@@ -139,20 +153,20 @@ public class ResolverController {
                             if (vehicleUseCapacityInTime[k][h] == 0) { //Si esto no es 0 es porque ya se sumo el vehiculo k en el instante de tiempo h
                                 resultSumMin += vehic.getVtype().getVeicCost();
                             }
-                            
+
                             //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
                             vehicleUseCapacityInTime[k][h] += order.getDemand(); //Agregamos la demanda al vehiculo k en el instante de tiempo h
                             orderIsSatisfied = true; //marcamos que la orden fue satisfecha
                             demandInTime[h] += order.getDemand(); //Agregamos la demanda al instante de tiempo h
-                            
+
                             //estos datos solo se guardan para realizar las pruebas de la solucion
                             String ordenes = "";
-                            if(ordersByVehicleOnlyForTestSolution.containsKey(k)){
-                            ordenes += ordersByVehicleOnlyForTestSolution.get(k)+", ";
+                            if (ordersByVehicleOnlyForTestSolution.containsKey(k)) {
+                                ordenes += ordersByVehicleOnlyForTestSolution.get(k) + ", ";
                             }
-                            ordenes += i+" demand: "+order.getDemand();
-                            ordersByVehicleOnlyForTestSolution.put(k, ordenes); 
-                            
+                            ordenes += i + " demand: " + order.getDemand();
+                            ordersByVehicleOnlyForTestSolution.put(k, ordenes);
+
                             break;
                         }
                     }
@@ -160,7 +174,7 @@ public class ResolverController {
 
             }
 
-            //si no se puede enviar con ningun vehiculo se envia express
+            //si no se puede enviar con ningun vehiculo, se envia express
             if (!orderIsSatisfied) {
                 resultSumMin += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
 
@@ -210,7 +224,7 @@ public class ResolverController {
             if(isUsedVehic)vehicleUsedCount++;
         }
 System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades ocupadas "+total);
-        */
+         */
         return resultSumMin;
     }
 
@@ -309,7 +323,7 @@ System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades oc
         int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
 
         //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
-         orders_demand.sort(new Comparator<Order>() {
+        orders_demand.sort(new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
                 return (o1.getDemand() - o2.getDemand()) * tipoDeOrdenamientoPrueba;
@@ -506,7 +520,71 @@ System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades oc
             }
             System.out.println();
         }
-System.out.println("Suma de capacidades ocupadas "+total);*/
+        System.out.println("Suma de capacidades ocupadas "+total);*/
         return resultSumMin;
     }
+
+    public void updateExcel(String excelFilePath, String nameFileData, int minimumCost, long timeofExecution, int filesCount) {
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+
+            XSSFWorkbook  workbook = new XSSFWorkbook(inputStream);
+
+            Sheet sheet = workbook.getSheetAt(0);
+
+            Iterator<Row> itRow = sheet.rowIterator();
+
+            int i = 0;
+            nameFileData = nameFileData.replace(".dat", "");
+            //String strFormula= "";
+            
+            while (itRow.hasNext() && i <= filesCount) {
+                Row currentRow = itRow.next();
+                
+                // busca cual es la fila que tiene el nombre del archivo
+                if (currentRow.getCell(3).getStringCellValue().equals(nameFileData)) {
+                    if(currentRow.getCell(5) == null){
+                        currentRow.createCell(5);
+                    }
+                    
+                    //escribe el valor del costo minimo dos celdas a la derecha
+                    currentRow.getCell(5).setCellType(CellType.NUMERIC);
+                    currentRow.getCell(5).setCellValue(minimumCost);
+                    
+                    
+                    if(currentRow.getCell(7) == null){
+                        currentRow.createCell(7);
+                    }
+                    currentRow.getCell(7).setCellType(CellType.NUMERIC);
+                    currentRow.getCell(7).setCellValue(timeofExecution);
+                    
+                    /*
+                    if(currentRow.getCell(6) == null){
+                        currentRow.createCell(6);
+                    }
+                    
+                    strFormula = "=";
+                    //=F2-B2                    
+                    currentRow.getCell(6).setCellType(CellType.FORMULA);
+                    currentRow.getCell(6).setCellFormula(strFormula);
+                    */
+                    
+                    
+                    i = filesCount + 1;
+                }
+                i++;
+            }
+            inputStream.close();
+ 
+            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+            workbook.write(outputStream);
+            workbook.close();
+            outputStream.close();
+        } catch (Exception ex) {
+            Logger.getLogger(ResolverController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

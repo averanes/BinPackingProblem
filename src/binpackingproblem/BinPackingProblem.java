@@ -30,6 +30,8 @@ public class BinPackingProblem {
 
         //realizamos los algoritmos para cada dataset
         int countOfExecutionsGRASP = 50;
+        int minimumCost;
+        String excelFilePath = "results-assignment.xlsx";
         for (int i = 0; i < files.length; i++) {
 
             System.out.println(files[i].getName());
@@ -37,8 +39,11 @@ public class BinPackingProblem {
             ResolverController m = ResolverController.getInstance(files[i]);
 
             long startTime = System.currentTimeMillis();
-            System.out.println("Heuristic Method Value: " + m.heuristicResolver()+ " Delay in milliseconds: " + (System.currentTimeMillis() - startTime));
+            minimumCost = m.heuristicResolver();
+            long timeofExecution = System.currentTimeMillis() - startTime;
+            System.out.println("Heuristic Method Value: " + minimumCost + " Delay in milliseconds: " + timeofExecution);
 
+            m.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             //********* GRASP ******
             /*startTime = System.currentTimeMillis();
             int minValue = Integer.MAX_VALUE;
