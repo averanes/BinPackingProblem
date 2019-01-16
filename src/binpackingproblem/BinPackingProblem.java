@@ -6,6 +6,7 @@
 package binpackingproblem;
 
 import controller.ResolverController;
+import dao.ManageExcel;
 import java.io.File;
 import java.io.FilenameFilter;
 
@@ -43,7 +44,7 @@ public class BinPackingProblem {
             long timeofExecution = System.currentTimeMillis() - startTime;
             System.out.println("Heuristic Method Value: " + minimumCost + " Delay in milliseconds: " + timeofExecution);
 
-            m.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
+            ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             //********* GRASP ******
             /*startTime = System.currentTimeMillis();
             int minValue = Integer.MAX_VALUE;
