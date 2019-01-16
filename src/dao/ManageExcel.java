@@ -42,25 +42,33 @@ public class ManageExcel {
             while (itRow.hasNext() && i <= filesCount) {
                 Row currentRow = itRow.next();
 
-                if (currentRow.getCell(3) != null) {
-                    
-                    // busca cual es la fila que tiene el nombre del archivo
-                    if (currentRow.getCell(3).getStringCellValue().equals(nameFileData)) {
-                        if (currentRow.getCell(5) == null) {
-                            currentRow.createCell(5);
-                        }
+                if (currentRow.getCell(3) == null) {
+                    currentRow.createCell(3);
+                }
+                currentRow.getCell(3).setCellType(CellType.STRING);
+                if(currentRow.getCell(3).getStringCellValue().equals("") || currentRow.getCell(3).getStringCellValue().isEmpty()){
+                  //escribe el valor nombre del fichero
+                    //currentRow.getCell(3).setCellType(CellType.STRING);
+                    currentRow.getCell(3).setCellValue(nameFileData);
+                }
+                
+                // busca cual es la fila que tiene el nombre del archivo
+                if (currentRow.getCell(3).getStringCellValue().equals(nameFileData)) {
+                    if (currentRow.getCell(5) == null) {
+                        currentRow.createCell(5);
+                    }
 
-                        //escribe el valor del costo minimo dos celdas a la derecha
-                        currentRow.getCell(5).setCellType(CellType.NUMERIC);
-                        currentRow.getCell(5).setCellValue(minimumCost);
+                    //escribe el valor del costo minimo dos celdas a la derecha
+                    currentRow.getCell(5).setCellType(CellType.NUMERIC);
+                    currentRow.getCell(5).setCellValue(minimumCost);
 
-                        if (currentRow.getCell(7) == null) {
-                            currentRow.createCell(7);
-                        }
-                        currentRow.getCell(7).setCellType(CellType.NUMERIC);
-                        currentRow.getCell(7).setCellValue(timeofExecution);
+                    if (currentRow.getCell(7) == null) {
+                        currentRow.createCell(7);
+                    }
+                    currentRow.getCell(7).setCellType(CellType.NUMERIC);
+                    currentRow.getCell(7).setCellValue(timeofExecution);
 
-                        /*
+                    /*
                     if(currentRow.getCell(6) == null){
                         currentRow.createCell(6);
                     }
@@ -69,10 +77,10 @@ public class ManageExcel {
                     //=F2-B2                    
                     currentRow.getCell(6).setCellType(CellType.FORMULA);
                     currentRow.getCell(6).setCellFormula(strFormula);
-                         */
-                        i = filesCount + 1;
-                    }
+                     */
+                    i = filesCount + 1;
                 }
+
                 i++;
             }
             inputStream.close();
