@@ -59,7 +59,7 @@ public class DataLoad {
             List<Integer> veicVolume = evalList(p.getProperty("VeicVolume"));
             m.VType = new ArrayList<VeicType>();
             for (int i = 0; i < veicCost.size(); i++) {
-                m.VType.add(new VeicType(veicCost.get(i), veicVolume.get(i)));
+                m.VType.add(new VeicType(i+1, veicCost.get(i), veicVolume.get(i)));
             }
 
              //cargando elect_vehicle (Cost per Stop)
