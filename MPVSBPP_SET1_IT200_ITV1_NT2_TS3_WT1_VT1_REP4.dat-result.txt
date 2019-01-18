@@ -1,0 +1,34 @@
+Satelite TimeSlot 0 Capacity Total 30000 Used 0
+Satelite TimeSlot 1 Capacity Total 30000 Used 0
+Satelite TimeSlot 2 Capacity Total 30000 Used 1660
+
+Suma de demandas 1660
+Vehiculo: 63 [Ordenes, demandas]: [0 : 19] , [1 : 19] , [2 : 19] , [3 : 19] , [4 : 19] , [5 : 18] , [6 : 18] , [7 : 18] , [186 : 1] 
+Vehiculo: 62 [Ordenes, demandas]: [8 : 18] , [9 : 18] , [10 : 18] , [11 : 18] , [12 : 18] , [13 : 18] , [14 : 18] , [15 : 17] , [95 : 7] 
+Vehiculo: 61 [Ordenes, demandas]: [16 : 17] , [17 : 17] , [18 : 17] , [19 : 17] , [20 : 17] , [21 : 16] , [22 : 16] , [23 : 16] , [24 : 16] , [187 : 1] 
+Vehiculo: 60 [Ordenes, demandas]: [25 : 16] , [26 : 16] , [27 : 16] , [28 : 16] , [29 : 16] , [30 : 16] , [31 : 15] , [32 : 15] , [33 : 15] , [77 : 9] 
+Vehiculo: 59 [Ordenes, demandas]: [34 : 15] , [35 : 15] , [36 : 14] , [37 : 14] , [38 : 14] , [39 : 14] , [40 : 13] , [41 : 13] , [42 : 13] , [43 : 13] , [46 : 12] 
+Vehiculo: 58 [Ordenes, demandas]: [44 : 13] , [45 : 13] , [47 : 12] , [48 : 12] , [49 : 12] , [50 : 11] , [51 : 11] , [52 : 11] , [53 : 11] , [54 : 11] , [55 : 11] , [56 : 11] , [57 : 11] 
+Vehiculo: 57 [Ordenes, demandas]: [58 : 11] , [59 : 11] , [60 : 11] , [61 : 11] , [62 : 11] , [63 : 11] , [64 : 10] , [65 : 10] , [66 : 10] , [67 : 10] , [68 : 10] , [69 : 10] , [70 : 10] , [71 : 10] , [143 : 4] 
+Vehiculo: 56 [Ordenes, demandas]: [72 : 10] , [73 : 10] , [74 : 10] , [75 : 10] , [76 : 10] , [78 : 9] , [79 : 9] , [80 : 9] , [81 : 9] , [82 : 9] , [83 : 9] , [84 : 9] , [85 : 9] , [86 : 8] , [87 : 8] , [88 : 8] , [144 : 4] 
+Vehiculo: 55 [Ordenes, demandas]: [89 : 8] , [90 : 8] , [91 : 8] , [92 : 8] , [93 : 8] , [94 : 8] , [96 : 7] , [97 : 7] , [98 : 7] , [99 : 7] , [100 : 7] , [101 : 7] , [102 : 7] , [103 : 7] , [104 : 7] , [105 : 7] , [106 : 7] , [107 : 6] , [108 : 6] , [109 : 6] , [110 : 6] , [188 : 1] 
+Vehiculo: 54 [Ordenes, demandas]: [111 : 6] , [112 : 6] , [113 : 6] , [114 : 6] , [115 : 6] , [116 : 6] , [117 : 6] , [118 : 6] , [119 : 6] , [120 : 6] , [121 : 6] , [122 : 5] , [123 : 5] , [124 : 5] , [125 : 5] , [126 : 5] , [127 : 5] , [128 : 5] , [129 : 5] , [130 : 5] , [131 : 5] , [132 : 5] , [133 : 5] , [134 : 5] , [135 : 5] , [136 : 5] , [137 : 5] , [145 : 4] 
+Vehiculo: 53 [Ordenes, demandas]: [138 : 5] , [139 : 5] , [140 : 5] , [141 : 5] , [142 : 5] , [146 : 4] , [147 : 4] , [148 : 4] , [149 : 4] , [150 : 4] , [151 : 4] , [152 : 4] , [153 : 4] , [154 : 4] , [155 : 4] , [156 : 4] , [157 : 4] , [158 : 4] , [159 : 4] , [160 : 4] , [161 : 4] , [162 : 4] , [163 : 3] , [164 : 3] , [165 : 3] , [166 : 3] , [167 : 3] , [168 : 3] , [169 : 3] , [170 : 3] , [171 : 3] , [172 : 3] , [173 : 2] , [174 : 2] , [175 : 2] , [176 : 2] , [177 : 2] , [178 : 2] , [179 : 2] , [180 : 2] , [181 : 2] , [182 : 2] , [183 : 2] , [184 : 2] , [185 : 2] , [189 : 1] 
+Vehiculo: 52 [Ordenes, demandas]: [190 : 1] , [191 : 1] , [192 : 1] , [193 : 1] , [194 : 1] , [195 : 1] , [196 : 1] , [197 : 1] , [198 : 1] , [199 : 1] 
+
+Vehicle 63 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 62 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 61 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 60 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 59 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 58 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 57 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 56 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 55 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 54 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 53 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 52 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 10
+
+vehiculos usados 12 Suma de capacidades ocupadas 1660
+MPVSBPP_SET1_IT200_ITV1_NT2_TS3_WT1_VT1_REP4.dat
+Heuristic Method Value: 19060 Delay in milliseconds: 0

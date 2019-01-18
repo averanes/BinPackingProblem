@@ -5,6 +5,8 @@
  */
 package controller;
 
+import static binpackingproblem.BinPackingProblem.print;
+import dao.CreateFileResult;
 import dao.DataLoad;
 import domain.Order;
 import domain.SatelliteInTimeSlot;
@@ -37,6 +39,8 @@ public class ResolverController {
 
     public int cost_for_express = 1000;//ca the unit cost for an express delivery.
 
+    public CreateFileResult c;
+    
     private static ResolverController instance;
 
     public static ResolverController getInstance(File dataSet) {
@@ -159,12 +163,12 @@ public class ResolverController {
                             demandInTime[h] += order.getDemand(); //Agregamos la demanda al instante de tiempo h
 
                             //estos datos solo se guardan para realizar las pruebas de la solucion
-                            if (runAndPrintSolution == 0) {
+                            if (runAndPrintSolution != 0) {
                                 String ordenes = "";
                                 if (ordersByVehicleOnlyForTestSolution.containsKey(k)) {
                                     ordenes += ordersByVehicleOnlyForTestSolution.get(k) + ", ";
                                 }
-                                ordenes += i + " demand: " + order.getDemand();
+                                ordenes += "["+i + " : " + order.getDemand()+"] ";
                                 ordersByVehicleOnlyForTestSolution.put(k, ordenes);
                             }
                             break;
@@ -258,12 +262,12 @@ public class ResolverController {
                             demandInTime2[h] += order.getDemand(); //Agregamos la demanda al instante de tiempo h
 
                             //estos datos solo se guardan para realizar las pruebas de la solucion
-                            if (runAndPrintSolution == 0) {
+                            if (runAndPrintSolution != 0) {
                                 String ordenes = "";
                                 if (ordersByVehicleOnlyForTestSolution2.containsKey(k)) {
-                                    ordenes += ordersByVehicleOnlyForTestSolution2.get(k) + ", ";
+                                    ordenes += ""+ordersByVehicleOnlyForTestSolution2.get(k) + ", ";
                                 }
-                                ordenes += i + " demand: " + order.getDemand();
+                                ordenes += "["+i + " : " + order.getDemand()+"] ";
                                 ordersByVehicleOnlyForTestSolution2.put(k, ordenes);
                             }
                             break;
@@ -294,9 +298,9 @@ public class ResolverController {
                     demandCountByTimeSlot.put(h, demandInTime[h]);
                     
                     if (runAndPrintSolution == 2)
-                    System.out.println("Satelite TimeSlot " + h + " Capacity Total " + satellite_time_slot.get(h).getCapacity() + " Used " + demandInTime[h]);
+                    print(c,"Satelite TimeSlot " + h + " Capacity Total " + satellite_time_slot.get(h).getCapacity() + " Used " + demandInTime[h]);
                 }
-                System.out.println("");
+                print(c,"");
 
                 //comprobando ordenes en vehiculos
                 int total = 0;
@@ -305,18 +309,18 @@ public class ResolverController {
                 }
                 
                 if (runAndPrintSolution == 2)
-                System.out.println("Suma de demandas " + total);
+                print(c,"Suma de demandas " + total);
 
                 for (Map.Entry<Integer, String> en : ordersByVehicleOnlyForTestSolution.entrySet()) {
                     Integer key = en.getKey();
                     String value = en.getValue();
 
                     if (runAndPrintSolution == 2)
-                    System.out.println("Vehiculo: " + vehicles.get(key).getPosition() + " Ordenes: " + value);
+                    print(c,"Vehiculo: " + vehicles.get(key).getPosition() + " [Ordenes, demandas]: " + value);
                 }
                 
                 if (runAndPrintSolution == 2)
-                System.out.println("");
+                print(c,"");
 
                 vehiclesCountByType = new HashMap<Integer, Integer>();
                 //comprobando vehiculos (capacidad total y capacidad usada)
@@ -332,7 +336,7 @@ public class ResolverController {
                             
                             
                             if (runAndPrintSolution == 2)
-                            System.out.println("Vehicle " + vehicles.get(i).getPosition() + " Type " + vehicles.get(i).getVtype().getNumOfVeicType() + " Capacity Total " + vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot " + j + ": " + vehicleUseCapacityInTime[i][j]);
+                            print(c,"Vehicle " + vehicles.get(i).getPosition() + " Type " + vehicles.get(i).getVtype().getNumOfVeicType() + " Capacity Total " + vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot " + j + ": Total Demands " + vehicleUseCapacityInTime[i][j]);
                             
                             isUsedVehic = true;
                         }
@@ -349,8 +353,12 @@ public class ResolverController {
                     }
                 }
                 
-                if (runAndPrintSolution == 2)
-                System.out.println("vehiculos usados " + vehicleUsedCount + " Suma de capacidades ocupadas " + total);
+                if (runAndPrintSolution == 2){
+                    print(c,"");
+                    print(c,"vehiculos usados " + vehicleUsedCount + " Suma de capacidades ocupadas " + total);
+                }
+                    
+                
             }
 
             
@@ -371,9 +379,9 @@ public class ResolverController {
                     demandCountByTimeSlot.put(h, demandInTime[h]);
                     
                     if (runAndPrintSolution == 2)
-                    System.out.println("Satelite TimeSlot " + h + " Capacity Total " + satellite_time_slot.get(h).getCapacity() + " Used " + demandInTime2[h]);
+                    print(c,"Satelite TimeSlot " + h + " Capacity Total " + satellite_time_slot.get(h).getCapacity() + " Used " + demandInTime2[h]);
                 }
-                System.out.println("");
+                print(c,"");
 
                 //comprobando ordenes en vehiculos
                 int total = 0;
@@ -382,16 +390,16 @@ public class ResolverController {
                 }
                 
                 if (runAndPrintSolution == 2)
-                System.out.println("Suma de demandas " + total);
+                print(c,"Suma de demandas " + total);
 
                 for (Map.Entry<Integer, String> en : ordersByVehicleOnlyForTestSolution2.entrySet()) {
                     Integer key = en.getKey();
                     String value = en.getValue();
 
                     if (runAndPrintSolution == 2)
-                    System.out.println("Vehiculo: " + vehicles.get(key).getPosition() + " Ordenes: " + value);
+                    print(c,"Vehiculo: " + vehicles.get(key).getPosition() + " [Ordenes, demandas]: " + value);
                 }
-                System.out.println("");
+                print(c,"");
 
                 vehiclesCountByType = new HashMap<Integer, Integer>();
                 //comprobando vehiculos (capacidad total y capacidad usada)
@@ -404,7 +412,7 @@ public class ResolverController {
 
                         if (vehicleUseCapacityInTime2[i][j] != 0) {
                             if (runAndPrintSolution == 2)
-                            System.out.println("Vehicle " + vehicles.get(i).getPosition() + " Type " + vehicles.get(i).getVtype().getNumOfVeicType() + " Capacity Total " + vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot " + j + ": " + vehicleUseCapacityInTime2[i][j]);
+                            print(c,"Vehicle " + vehicles.get(i).getPosition() + " Type " + vehicles.get(i).getVtype().getNumOfVeicType() + " Capacity Total " + vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot " + j + ": Total Demands " + vehicleUseCapacityInTime2[i][j]);
                             isUsedVehic = true;
                         }
 
@@ -421,8 +429,11 @@ public class ResolverController {
                     }
                 }
                 
-                if (runAndPrintSolution == 2)
-                System.out.println("vehiculos usados " + vehicleUsedCount + " Suma de capacidades ocupadas " + total);
+                if (runAndPrintSolution == 2){
+                    print(c,"");
+                     print(c,"vehiculos usados " + vehicleUsedCount + " Suma de capacidades ocupadas " + total);
+                }
+               
             }
         }
         if (resultSumMinFirst <= resultSumMin2) {
@@ -433,7 +444,10 @@ public class ResolverController {
     }
 
     
-
+public static void print(CreateFileResult c, String text){
+        c.setValueToPrint(text);
+        //System.out.println(text);
+    }
     
     
     

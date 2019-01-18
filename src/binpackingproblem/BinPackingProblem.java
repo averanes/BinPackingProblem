@@ -6,6 +6,7 @@
 package binpackingproblem;
 
 import controller.ResolverController;
+import dao.CreateFileResult;
 import dao.ManageExcel;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -42,12 +43,11 @@ public class BinPackingProblem {
         String excelFilePath = "results-assignment.xlsx";
         for (int i = 0; i < files.length; i++) {
 
-            System.out.println(files[i].getName());
-
             ResolverController m = ResolverController.getInstance(files[i]);
             //ResolverController m = ResolverController.getInstance(new File("MPVSBPP_SET1_IT1000_ITV1_NT2_TS3_WT1_VT1_REP9.dat"));
+            m.c=new CreateFileResult(files[i].getName());
              
-            m.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+            m.runAndPrintSolution = 2; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
            
 
             long startTime = System.currentTimeMillis();
@@ -55,11 +55,14 @@ public class BinPackingProblem {
             long timeofExecution = System.currentTimeMillis() - startTime;
             
             sumCost+=minimumCost;
-            System.out.println("Heuristic Method Value: " + minimumCost + " Delay in milliseconds: " + timeofExecution);
-
+            
+            print(m.c, files[i].getName());
+            print(m.c,"Heuristic Method Value: " + minimumCost + " Delay in milliseconds: " + timeofExecution);
+            
+            m.c.saveFile();
             
             
-            for (Map.Entry<Integer, Integer> en : m.vehiclesCountByType.entrySet()) {
+           /* for (Map.Entry<Integer, Integer> en : m.vehiclesCountByType.entrySet()) {
                 Integer key = en.getKey(); //type of vehicle
                 Integer value = en.getValue(); //cant of vehicles
             }
@@ -68,18 +71,23 @@ public class BinPackingProblem {
                 Integer key = en.getKey(); //time slot
                 Integer value = en.getValue(); //cant of demands
             }
-            
+            */
             
             //ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             
 
             
             
-         System.out.println();
+         //System.out.println();
         }
         
         System.out.println("sumCost "+sumCost );
 
+    }
+    
+    public static void print(CreateFileResult c, String text){
+        c.setValueToPrint(text);
+        //System.out.println(text);
     }
 
 }
