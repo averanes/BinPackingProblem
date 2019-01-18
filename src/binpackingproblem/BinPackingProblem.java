@@ -69,6 +69,8 @@ public class BinPackingProblem {
                 Integer value = en.getValue(); //cant of demands
             }
             
+            
+            
             //ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             
 
