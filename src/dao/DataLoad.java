@@ -38,7 +38,7 @@ public class DataLoad {
             m.orders = getInt(p.getProperty("m"));
             m.vehiclesCount = getInt(p.getProperty("o"));
             m.timeslots = getInt(p.getProperty("p"));
-
+            m.numVTypes = getInt(p.getProperty("numVTypes"));
             //cargando las demandas de las ordenes
            List<Integer> order  = evalList(p.getProperty("demand"));
            m.orders_demand = new ArrayList<>();

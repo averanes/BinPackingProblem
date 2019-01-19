@@ -1,6 +1,6 @@
 Satelite TimeSlot 0 Capacity Total 30000 Used 0
-Satelite TimeSlot 1 Capacity Total 30000 Used 0
-Satelite TimeSlot 2 Capacity Total 30000 Used 4256
+Satelite TimeSlot 1 Capacity Total 30000 Used 4256
+Satelite TimeSlot 2 Capacity Total 30000 Used 0
 
 Suma de demandas 4256
 Vehiculo: 83 [Ordenes, demandas]: [0 : 19] , [1 : 19] , [2 : 19] , [3 : 19] , [4 : 19] , [334 : 5] 
@@ -47,50 +47,50 @@ Vehiculo: 43 [Ordenes, demandas]: [380 : 4] , [381 : 4] , [382 : 4] , [383 : 4] 
 Vehiculo: 42 [Ordenes, demandas]: [410 : 3] , [411 : 3] , [412 : 3] , [413 : 3] , [414 : 3] , [415 : 3] , [416 : 3] , [417 : 3] , [418 : 3] , [419 : 3] , [420 : 3] , [421 : 3] , [422 : 3] , [423 : 3] , [424 : 3] , [425 : 3] , [426 : 3] , [427 : 3] , [428 : 3] , [429 : 3] , [430 : 3] , [431 : 3] , [432 : 3] , [433 : 3] , [434 : 3] , [435 : 3] , [436 : 3] , [445 : 2] , [446 : 2] , [447 : 2] , [448 : 2] , [449 : 2] , [450 : 2] , [451 : 2] , [452 : 2] , [453 : 2] , [475 : 1] 
 Vehiculo: 41 [Ordenes, demandas]: [454 : 2] , [455 : 2] , [456 : 2] , [457 : 2] , [458 : 2] , [459 : 2] , [460 : 2] , [461 : 2] , [462 : 2] , [463 : 2] , [464 : 2] , [465 : 2] , [466 : 2] , [467 : 2] , [468 : 2] , [469 : 2] , [476 : 1] , [477 : 1] , [478 : 1] , [479 : 1] , [480 : 1] , [481 : 1] , [482 : 1] , [483 : 1] , [484 : 1] , [485 : 1] , [486 : 1] , [487 : 1] , [488 : 1] , [489 : 1] , [490 : 1] , [491 : 1] , [492 : 1] , [493 : 1] , [494 : 1] , [495 : 1] , [496 : 1] , [497 : 1] , [498 : 1] , [499 : 1] 
 
-Vehicle 83 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 82 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 81 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 80 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 79 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 78 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 77 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 76 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 75 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 74 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 73 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 72 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 71 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 70 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 69 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 68 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 67 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 66 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 65 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 64 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 63 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 62 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 61 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 60 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 59 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 58 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 57 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 56 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 55 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 54 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 53 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 52 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 51 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 50 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 49 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 48 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 47 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 46 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 45 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 44 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 43 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 42 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 41 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 56
+Vehicle 83 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 82 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 81 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 80 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 79 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 78 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 77 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 76 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 75 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 74 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 73 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 72 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 71 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 70 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 69 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 68 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 67 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 66 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 65 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 64 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 63 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 62 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 61 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 60 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 59 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 58 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 57 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 56 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 55 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 54 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 53 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 52 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 51 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 50 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 49 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 48 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 47 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 46 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 45 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 44 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 43 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 42 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 41 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 56
 
 vehiculos usados 43 Suma de capacidades ocupadas 4256
 MPVSBPP_SET1_IT500_ITV1_NT1_TS3_WT1_VT1_REP2.dat
-Heuristic Method Value: 49092 Delay in milliseconds: 0
+Heuristic Method Value: 67068 Delay in milliseconds: 0

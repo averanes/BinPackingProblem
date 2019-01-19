@@ -1,6 +1,6 @@
 Satelite TimeSlot 0 Capacity Total 30000 Used 0
-Satelite TimeSlot 1 Capacity Total 30000 Used 0
-Satelite TimeSlot 2 Capacity Total 30000 Used 2170
+Satelite TimeSlot 1 Capacity Total 30000 Used 2170
+Satelite TimeSlot 2 Capacity Total 30000 Used 0
 
 Suma de demandas 2170
 Vehiculo: 41 [Ordenes, demandas]: [0 : 19] , [1 : 19] , [2 : 19] , [3 : 19] , [4 : 19] , [161 : 5] 
@@ -26,29 +26,29 @@ Vehiculo: 22 [Ordenes, demandas]: [131 : 8] , [132 : 8] , [133 : 8] , [134 : 8] 
 Vehiculo: 21 [Ordenes, demandas]: [145 : 7] , [146 : 7] , [147 : 7] , [148 : 7] , [149 : 7] , [150 : 7] , [151 : 7] , [152 : 7] , [153 : 7] , [154 : 7] , [155 : 7] , [156 : 6] , [157 : 6] , [158 : 6] , [167 : 4] , [193 : 1] 
 Vehiculo: 20 [Ordenes, demandas]: [159 : 6] , [160 : 6] , [168 : 4] , [169 : 4] , [170 : 4] , [172 : 3] , [173 : 3] , [174 : 3] , [175 : 3] , [176 : 3] , [177 : 3] , [179 : 2] , [180 : 2] , [181 : 2] , [182 : 2] , [183 : 2] , [184 : 2] , [185 : 2] , [186 : 2] , [187 : 2] , [188 : 2] , [189 : 2] , [194 : 1] , [195 : 1] , [196 : 1] , [197 : 1] , [198 : 1] , [199 : 1] 
 
-Vehicle 41 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 40 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 39 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 38 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 37 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 36 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 35 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 34 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 33 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 32 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 31 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 30 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 29 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 28 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 27 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 26 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 25 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 24 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 23 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 22 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 21 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 100
-Vehicle 20 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 70
+Vehicle 41 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 40 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 39 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 38 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 37 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 36 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 35 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 34 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 33 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 32 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 31 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 30 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 29 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 28 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 27 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 26 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 25 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 24 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 23 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 22 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 21 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
+Vehicle 20 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 70
 
 vehiculos usados 22 Suma de capacidades ocupadas 2170
 MPVSBPP_SET1_IT200_ITV2_NT1_TS3_WT1_VT1_REP10.dat
-Heuristic Method Value: 23390 Delay in milliseconds: 2
+Heuristic Method Value: 28710 Delay in milliseconds: 0

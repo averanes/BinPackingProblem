@@ -39,7 +39,7 @@ public class BinPackingProblem {
        // int countOfExecutionsGRASP = 50;
        
         int minimumCost;
-        int sumCost=0; //heuristicResolverInicial 35427705    heuristicResolverSecond 35749895  heuristicResolverDoble 35363405
+        int sumCost=0; //   FULL-RESULT 31731024
         String excelFilePath = "results-assignment.xlsx";
         for (int i = 0; i < files.length; i++) {
 
@@ -51,7 +51,7 @@ public class BinPackingProblem {
            
 
             long startTime = System.currentTimeMillis();
-            minimumCost = m.heuristicResolverDoble();
+            minimumCost = m.heuristicResolverPerfect();
             long timeofExecution = System.currentTimeMillis() - startTime;
             
             sumCost+=minimumCost;
