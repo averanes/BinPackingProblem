@@ -73,6 +73,7 @@ public class BinPackingProblem {
                
             }
 
+            workbook.setForceFormulaRecalculation(true);
             inputStream.close();
             FileOutputStream outputStream = new FileOutputStream(excelFilePath);
             workbook.write(outputStream);
