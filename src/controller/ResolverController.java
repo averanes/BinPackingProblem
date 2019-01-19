@@ -56,7 +56,7 @@ public class ResolverController {
 
     }
 
-    public int runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 run, update the value for excel and print in Console
+    public int runAndPrintSolution = 0; //0 only run, 1 run and update the value for excel and 2 run, update the value for excel and print in Console
     public Map<Integer, Integer> vehiclesCountByType;
     public Map<Integer, Integer> demandCountByTimeSlot;
 
@@ -262,7 +262,7 @@ public class ResolverController {
     }
 
     //Optimizado en base a disminuir el costo por parada
-    public int heuristicResolverOld() {
+   /* public int heuristicResolverOld() {
         int resultSumMin = 0;
 
         //El costo por parada aporta la mayor variacion de valor, entonces optimizando con respecto a esto se obtienen los mejores resultados
@@ -307,31 +307,7 @@ public class ResolverController {
 
                 int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
 
-                /*if (comparator == 0 && timeSlotOrganized.size() > 1) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).pos);
-                }
-                if (comparator == 0 && timeSlotOrganized.size() > 2) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).pos);
-                }*/
- /*if(comparator == 0 ){
-                if(!vehicleType.containsKey(o1.getVtype().getNumOfVeicType())){
-                    System.out.println("vehicle type "+o1.getVtype().getNumOfVeicType());
-                    
-                    
-                    System.out.println("valor "+(int)(((float)o1.getVtype().getVeicVolume() / (float)o1.getVtype().getVeicCost())*100));
-                    
-                    System.out.println("comparator "+comparator);
-                    
-                    vehicleType.put(o1.getVtype().getNumOfVeicType(), 1);
-                }
-                }*/
- /*
-                if (comparator == 0) {
-                    comparator = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
-                }
-
-                return comparator == 0 ? (o1.getVtype().getVeicVolume() - o2.getVtype().getVeicVolume()) * tipoDeOrdenamientoPrueba : comparator;
-                 */
+                
                 if (comparator == 0) {
                     comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
 
@@ -404,55 +380,12 @@ public class ResolverController {
             }
         }
 
-        /*
-        
-        //Comprobacion de la solucion
-        
-        //comprobando Satelite en instante de tiempo (capacidad con usado)
-        for (int h = 0; h < timeslots; h++) {
-          System.out.println("Satelite TimeSlot "+h+" Capacity Total "+satellite_time_slot.get(h).getCapacity()+" Used "+demandInTime[h]); 
-        }
-        System.out.println("");
-        
-        
-        //comprobando ordenes en vehiculos
-        int total = 0;
-        for (int i = 0; i < orders; i++) {
-            total += orders_demand.get(i).getDemand();
-        }
-        System.out.println("Suma de demandas "+total);
-        
-        for (Map.Entry<Integer, String> en : ordersByVehicleOnlyForTestSolution.entrySet()) {
-            Integer key = en.getKey();
-            String value = en.getValue();
-           
-            System.out.println("Vehiculo: "+vehicles.get(key).getPosition()+" Ordenes: "+value); 
-        }
-        System.out.println("");
-        
-        //comprobando vehiculos (capacidad total y capacidad usada)
-        total = 0; 
-        int vehicleUsedCount = 0;
-         for (int i = 0; i < vehiclesCount; i++) {
-           boolean isUsedVehic = false;
-            for (int j = 0; j < timeslots; j++) {
-                total += vehicleUseCapacityInTime[i][j];
-                
-                if(vehicleUseCapacityInTime[i][j]!=0){
-                    System.out.println("Vehicle "+vehicles.get(i).getPosition()+" Type "+vehicles.get(i).getVtype().getNumOfVeicType()+" Capacity Total "+vehicles.get(i).getVtype().getVeicVolume() + " TimeSlot "+j+": "+vehicleUseCapacityInTime[i][j]);
-                    isUsedVehic = true;
-                }
-                
-            }
-            if(isUsedVehic)vehicleUsedCount++;
-        }
-System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades ocupadas "+total);
-         */
+       
         return resultSumMin;
-    }
+    }*/
 
     //Optimizado en base a disminuir la Tarifa por la demanda (di x Th) MEJORADO
-    public int heuristicResolverGoodSolutionButBadResult() {
+   /* public int heuristicResolverGoodSolutionButBadResult() {
         int resultSumMin = 0;
 
         //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
@@ -536,10 +469,10 @@ System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades oc
         }
 
         return resultSumMin;
-    }
+    }*/
 
     //Grasp basandonos en las primeras versiones del greedy, ya no se acerca a la solucion factible
-    public int GRASP_metaHeuristicResolver() {
+   /* public int GRASP_metaHeuristicResolver() {
         int resultSumMin = 0;
 
         //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
@@ -626,34 +559,7 @@ System.out.println("vehiculos usados "+vehicleUsedCount+" Suma de capacidades oc
             }
         }
 
-        /*
-        Comprobacion de la solucion GRASP
-        int total = 0;
-        for (int i = 0; i < orders; i++) {
-            total += orders_demand.get(i).getDemand();
-        }
-        System.out.println("Suma de demandas "+total);
         
-        total = 0; 
-        
-         for (int i = 0; i < vehicleUseCapacityInTime.length; i++) {
-           
-            
-            for (int j = 0; j < vehicles.size(); j++) {
-                if(vehicles.get(j).getPosition() == i){
-                System.out.println("Vehicle "+i+" Capacity Total "+vehicles.get(j).getVtype().getVeicVolume());
-                }
-            }
-            
-           
-            for (int j = 0; j < vehicleUseCapacityInTime[i].length; j++) {
-                total += vehicleUseCapacityInTime[i][j];
-                if(vehicleUseCapacityInTime[i][j]!=0)
-                System.out.print(" "+j+": "+vehicleUseCapacityInTime[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println("Suma de capacidades ocupadas "+total);*/
         return resultSumMin;
-    }
+    }*/
 }

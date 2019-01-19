@@ -36,8 +36,7 @@ public class BinPackingProblem {
         
         
         //realizamos los algoritmos para cada dataset
-       // int countOfExecutionsGRASP = 50;
-       
+     
         int minimumCost;
         int sumCost=0; //   FULL-RESULT 31731024
         String excelFilePath = "results-assignment.xlsx";
@@ -47,7 +46,7 @@ public class BinPackingProblem {
             //ResolverController m = ResolverController.getInstance(new File("MPVSBPP_SET1_IT1000_ITV1_NT2_TS3_WT1_VT1_REP9.dat"));
             m.c=new CreateFileResult(files[i].getName());
              
-            m.runAndPrintSolution = 2; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+            m.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
            
 
             long startTime = System.currentTimeMillis();
@@ -61,24 +60,11 @@ public class BinPackingProblem {
             
             m.c.saveFile();
             
-            
-           /* for (Map.Entry<Integer, Integer> en : m.vehiclesCountByType.entrySet()) {
-                Integer key = en.getKey(); //type of vehicle
-                Integer value = en.getValue(); //cant of vehicles
-            }
-            
-            for (Map.Entry<Integer, Integer> en : m.demandCountByTimeSlot.entrySet()) {
-                Integer key = en.getKey(); //time slot
-                Integer value = en.getValue(); //cant of demands
-            }
-            */
+          
             
             //ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             
 
-            
-            
-         //System.out.println();
         }
         
         System.out.println("sumCost "+sumCost );
