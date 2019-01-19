@@ -69,7 +69,7 @@ public class BinPackingProblem {
                     // Imprimir este tiempo en el excel
                     // print(m.c,"Heuristic Result: " + minimumCost + " Delay in milliseconds " + timeofExecution);
                 }
-
+                
                 ManageExcel.updateExcel(workbook, files[i].getName(), minimumCost, timeofExecution, files.length, m.vehiclesCountByType, m.demandCountByTimeSlot);
             }
 
@@ -78,6 +78,7 @@ public class BinPackingProblem {
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
+            
         } catch (Exception ex) {
             Logger.getLogger(BinPackingProblem.class.getName()).log(Level.SEVERE, null, ex);
         }

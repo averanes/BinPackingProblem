@@ -6,9 +6,6 @@
 package dao;
 
 import controller.ResolverController;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +13,13 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.util.Map;
+import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 
 /**
  *
@@ -23,17 +27,39 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ManageExcel {
 
-    public static void updateExcel(String excelFilePath, String nameFileData, int minimumCost, long timeofExecution, int filesCount) {
+    public static void updateExcel(XSSFWorkbook workbook, String nameFileData, int minimumCost, long timeofExecution, int filesCount, Map<Integer, Integer> vehiclesCountByType, Map<Integer, Integer> demandCountByTimeSlot) {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         try {
+            /*
             FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
-
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-
-            Sheet sheet = workbook.getSheetAt(0);
+            */
+            
+            int sheetNumber = 0;
+            int rowsNumber = 121;
+            
+            /*
+            if(nameFileData.contains("5000")){
+              sheetNumber = 4;
+              rowsNumber = 41;
+            }
+            */
+            
+            Sheet sheet = workbook.getSheetAt(sheetNumber);
 
             Iterator<Row> itRow = sheet.rowIterator();
+            
+            XSSFCellStyle hlinkstyle = workbook.createCellStyle();
+            XSSFFont hlinkfont = workbook.createFont();
+            hlinkfont.setUnderline(XSSFFont.U_SINGLE);
+            /*
+            short color = Short.valueOf("#0000ff");
+            hlinkfont.setColor(color);
+            */
+
+            hlinkfont.setColor(IndexedColors.BLUE.getIndex());
+            hlinkstyle.setFont(hlinkfont);
 
             int i = 0;
             nameFileData = nameFileData.replace(".dat", "");
@@ -46,8 +72,8 @@ public class ManageExcel {
                     currentRow.createCell(3);
                 }
                 currentRow.getCell(3).setCellType(CellType.STRING);
-                if(currentRow.getCell(3).getStringCellValue().equals("") || currentRow.getCell(3).getStringCellValue().isEmpty()){
-                  //escribe el valor nombre del fichero
+                if(currentRow.getCell(3).getStringCellValue().equals("juana") || currentRow.getCell(3).getStringCellValue().isEmpty()){
+                    //escribe el valor nombre del fichero
                     //currentRow.getCell(3).setCellType(CellType.STRING);
                     currentRow.getCell(3).setCellValue(nameFileData);
                 }
@@ -61,12 +87,59 @@ public class ManageExcel {
                     //escribe el valor del costo minimo dos celdas a la derecha
                     currentRow.getCell(5).setCellType(CellType.NUMERIC);
                     currentRow.getCell(5).setCellValue(minimumCost);
+                    
+                    CreationHelper createHelper = workbook.getCreationHelper();
+                    XSSFHyperlink link = (XSSFHyperlink)createHelper.createHyperlink(HyperlinkType.FILE);
+                    link.setAddress(nameFileData + ".dat");
+                    currentRow.getCell(3).setHyperlink(link);
+                    currentRow.getCell(3).setCellStyle(hlinkstyle);
+
+                    link = (XSSFHyperlink)createHelper.createHyperlink(HyperlinkType.FILE);
+                    link.setAddress(nameFileData + ".dat-result.txt");
+                    currentRow.getCell(5).setHyperlink(link);
+                    currentRow.getCell(5).setCellStyle(hlinkstyle);
+
+                    /*
+                    CreationHelper createHelper = workbook.getCreationHelper();
+                    Hyperlink link = createHelper.createHyperlink(HyperlinkType.FILE);
+                    link.setAddress(nameFileData + ".dat-result.txt");
+                    currentRow.getCell(3).setHyperlink((org.apache.poi.ss.usermodel.Hyperlink) link);
+                    */
 
                     if (currentRow.getCell(7) == null) {
                         currentRow.createCell(7);
                     }
                     currentRow.getCell(7).setCellType(CellType.NUMERIC);
                     currentRow.getCell(7).setCellValue(timeofExecution);
+
+                    int c;
+                    for (c = 11; c <= 18; c++) {
+                        if (c != 15) {
+                            if (currentRow.getCell(c) == null) {
+                                currentRow.createCell(c);
+                            }
+                            currentRow.createCell(c);
+                            currentRow.getCell(c).setCellType(CellType.NUMERIC);
+                            currentRow.getCell(c).setCellValue(0);
+                        }
+                    }
+
+                    //inicializamos c en 10 pq es el numero de celda anterior a los tipos de vehiculos
+                    c = 10;
+                    for (Map.Entry<Integer, Integer> en : vehiclesCountByType.entrySet()) {
+                        Integer key = en.getKey(); //type of vehicle
+                        Integer value = en.getValue(); //cant of vehicles
+                        currentRow.getCell(c + key).setCellValue(value);                        
+                    }
+
+                    //inicializamos c en 16 pq es el numero de celda donde empiezan los intervalos de tiempo
+                    c = 16;
+                    for (Map.Entry<Integer, Integer> en : demandCountByTimeSlot.entrySet()) {
+                        Integer key = en.getKey(); //time slot
+                        Integer value = en.getValue(); //cant of demands
+                        currentRow.getCell(c + key).setCellValue(value); 
+                    }
+
 
                     /*
                     if(currentRow.getCell(6) == null){
@@ -83,12 +156,15 @@ public class ManageExcel {
 
                 i++;
             }
+            
+            /*
             inputStream.close();
 
             FileOutputStream outputStream = new FileOutputStream(excelFilePath);
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
+            */
         } catch (Exception ex) {
             Logger.getLogger(ResolverController.class.getName()).log(Level.SEVERE, null, ex);
         }
