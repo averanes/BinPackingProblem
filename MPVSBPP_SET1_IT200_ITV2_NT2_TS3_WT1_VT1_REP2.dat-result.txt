@@ -1,55 +1,41 @@
 Satelite TimeSlot 0 Capacity Total 30000 Used 0
-Satelite TimeSlot 1 Capacity Total 30000 Used 2171
-Satelite TimeSlot 2 Capacity Total 30000 Used 0
+Satelite TimeSlot 1 Capacity Total 30000 Used 0
+Satelite TimeSlot 2 Capacity Total 30000 Used 2171
 
-Sum of demands 2171
-Vehicle: 41 [Orders, Demands]: [0 : 19] , [1 : 19] , [2 : 19] , [3 : 19] , [4 : 19] , [159 : 5] 
-Vehicle: 40 [Orders, Demands]: [5 : 19] , [6 : 19] , [7 : 19] , [8 : 19] , [9 : 19] , [160 : 5] 
-Vehicle: 39 [Orders, Demands]: [10 : 18] , [11 : 18] , [12 : 18] , [13 : 18] , [14 : 18] , [112 : 10] 
-Vehicle: 38 [Orders, Demands]: [15 : 18] , [16 : 18] , [17 : 18] , [18 : 18] , [19 : 18] , [113 : 10] 
-Vehicle: 37 [Orders, Demands]: [20 : 18] , [21 : 18] , [22 : 18] , [23 : 18] , [24 : 17] , [100 : 11] 
-Vehicle: 36 [Orders, Demands]: [25 : 17] , [26 : 17] , [27 : 17] , [28 : 17] , [29 : 17] , [44 : 15] 
-Vehicle: 35 [Orders, Demands]: [30 : 17] , [31 : 17] , [32 : 17] , [33 : 17] , [34 : 17] , [45 : 15] 
-Vehicle: 34 [Orders, Demands]: [35 : 17] , [36 : 17] , [37 : 16] , [38 : 16] , [39 : 16] , [40 : 16] , [184 : 2] 
-Vehicle: 33 [Orders, Demands]: [41 : 16] , [42 : 16] , [43 : 16] , [46 : 15] , [47 : 15] , [48 : 15] , [141 : 7] 
-Vehicle: 32 [Orders, Demands]: [49 : 15] , [50 : 15] , [51 : 15] , [52 : 15] , [53 : 15] , [54 : 15] , [114 : 10] 
-Vehicle: 31 [Orders, Demands]: [55 : 15] , [56 : 15] , [57 : 15] , [58 : 15] , [59 : 14] , [60 : 14] , [89 : 12] 
-Vehicle: 30 [Orders, Demands]: [61 : 14] , [62 : 14] , [63 : 14] , [64 : 14] , [65 : 14] , [66 : 14] , [67 : 14] , [185 : 2] 
-Vehicle: 29 [Orders, Demands]: [68 : 14] , [69 : 14] , [70 : 14] , [71 : 14] , [72 : 13] , [73 : 13] , [74 : 13] , [161 : 5] 
-Vehicle: 28 [Orders, Demands]: [75 : 13] , [76 : 13] , [77 : 13] , [78 : 13] , [79 : 13] , [80 : 13] , [81 : 13] , [122 : 9] 
-Vehicle: 27 [Orders, Demands]: [82 : 13] , [83 : 13] , [84 : 13] , [85 : 13] , [86 : 13] , [87 : 13] , [88 : 13] , [123 : 9] 
-Vehicle: 26 [Orders, Demands]: [90 : 12] , [91 : 12] , [92 : 12] , [93 : 12] , [94 : 12] , [95 : 12] , [96 : 12] , [97 : 12] , [167 : 4] 
-Vehicle: 25 [Orders, Demands]: [98 : 12] , [99 : 12] , [101 : 11] , [102 : 11] , [103 : 11] , [104 : 11] , [105 : 11] , [106 : 11] , [115 : 10] 
-Vehicle: 24 [Orders, Demands]: [107 : 11] , [108 : 11] , [109 : 11] , [110 : 11] , [111 : 11] , [116 : 10] , [117 : 10] , [118 : 10] , [119 : 10] , [162 : 5] 
-Vehicle: 23 [Orders, Demands]: [120 : 10] , [121 : 10] , [124 : 9] , [125 : 9] , [126 : 9] , [127 : 9] , [128 : 9] , [129 : 9] , [130 : 9] , [131 : 9] , [135 : 8] 
-Vehicle: 22 [Orders, Demands]: [132 : 9] , [133 : 9] , [134 : 9] , [136 : 8] , [137 : 8] , [138 : 8] , [139 : 8] , [140 : 8] , [142 : 7] , [143 : 7] , [144 : 7] , [145 : 7] , [163 : 5] 
-Vehicle: 21 [Orders, Demands]: [146 : 7] , [147 : 7] , [148 : 6] , [149 : 6] , [150 : 6] , [151 : 6] , [152 : 6] , [153 : 6] , [154 : 6] , [155 : 6] , [156 : 6] , [157 : 6] , [158 : 6] , [164 : 5] , [165 : 5] , [166 : 5] , [168 : 4] , [190 : 1] 
-Vehicle: 20 [Orders, Demands]: [169 : 4] , [170 : 4] , [171 : 4] , [172 : 4] , [173 : 4] , [174 : 4] , [175 : 4] , [176 : 4] , [177 : 4] , [178 : 3] , [179 : 3] , [180 : 3] , [181 : 3] , [182 : 3] , [183 : 3] , [186 : 2] , [187 : 2] , [188 : 2] , [189 : 2] , [191 : 1] , [192 : 1] , [193 : 1] , [194 : 1] , [195 : 1] , [196 : 1] , [197 : 1] , [198 : 1] , [199 : 1] 
+Suma de demandas 2171
+Vehiculo: 83 [Ordenes, demandas]: [0 : 19] , [1 : 19] , [2 : 19] , [3 : 19] , [4 : 19] , [5 : 19] , [6 : 19] , [24 : 17] 
+Vehiculo: 82 [Ordenes, demandas]: [7 : 19] , [8 : 19] , [9 : 19] , [10 : 18] , [11 : 18] , [12 : 18] , [13 : 18] , [14 : 18] , [178 : 3] 
+Vehiculo: 81 [Ordenes, demandas]: [15 : 18] , [16 : 18] , [17 : 18] , [18 : 18] , [19 : 18] , [20 : 18] , [21 : 18] , [22 : 18] , [148 : 6] 
+Vehiculo: 80 [Ordenes, demandas]: [23 : 18] , [25 : 17] , [26 : 17] , [27 : 17] , [28 : 17] , [29 : 17] , [30 : 17] , [31 : 17] , [72 : 13] 
+Vehiculo: 79 [Ordenes, demandas]: [32 : 17] , [33 : 17] , [34 : 17] , [35 : 17] , [36 : 17] , [37 : 16] , [38 : 16] , [39 : 16] , [40 : 16] , [190 : 1] 
+Vehiculo: 78 [Ordenes, demandas]: [41 : 16] , [42 : 16] , [43 : 16] , [44 : 15] , [45 : 15] , [46 : 15] , [47 : 15] , [48 : 15] , [49 : 15] , [89 : 12] 
+Vehiculo: 77 [Ordenes, demandas]: [50 : 15] , [51 : 15] , [52 : 15] , [53 : 15] , [54 : 15] , [55 : 15] , [56 : 15] , [57 : 15] , [58 : 15] , [59 : 14] , [191 : 1] 
+Vehiculo: 76 [Ordenes, demandas]: [60 : 14] , [61 : 14] , [62 : 14] , [63 : 14] , [64 : 14] , [65 : 14] , [66 : 14] , [67 : 14] , [68 : 14] , [69 : 14] , [112 : 10] 
+Vehiculo: 75 [Ordenes, demandas]: [70 : 14] , [71 : 14] , [73 : 13] , [74 : 13] , [75 : 13] , [76 : 13] , [77 : 13] , [78 : 13] , [79 : 13] , [80 : 13] , [81 : 13] , [159 : 5] 
+Vehiculo: 74 [Ordenes, demandas]: [82 : 13] , [83 : 13] , [84 : 13] , [85 : 13] , [86 : 13] , [87 : 13] , [88 : 13] , [90 : 12] , [91 : 12] , [92 : 12] , [93 : 12] , [100 : 11] 
+Vehiculo: 73 [Ordenes, demandas]: [94 : 12] , [95 : 12] , [96 : 12] , [97 : 12] , [98 : 12] , [99 : 12] , [101 : 11] , [102 : 11] , [103 : 11] , [104 : 11] , [105 : 11] , [106 : 11] , [107 : 11] , [192 : 1] 
+Vehiculo: 72 [Ordenes, demandas]: [108 : 11] , [109 : 11] , [110 : 11] , [111 : 11] , [113 : 10] , [114 : 10] , [115 : 10] , [116 : 10] , [117 : 10] , [118 : 10] , [119 : 10] , [120 : 10] , [121 : 10] , [122 : 9] , [141 : 7] 
+Vehiculo: 71 [Ordenes, demandas]: [123 : 9] , [124 : 9] , [125 : 9] , [126 : 9] , [127 : 9] , [128 : 9] , [129 : 9] , [130 : 9] , [131 : 9] , [132 : 9] , [133 : 9] , [134 : 9] , [135 : 8] , [136 : 8] , [137 : 8] , [138 : 8] , [139 : 8] , [184 : 2] 
+Vehiculo: 70 [Ordenes, demandas]: [140 : 8] , [142 : 7] , [143 : 7] , [144 : 7] , [145 : 7] , [146 : 7] , [147 : 7] , [149 : 6] , [150 : 6] , [151 : 6] , [152 : 6] , [153 : 6] , [154 : 6] , [155 : 6] , [156 : 6] , [157 : 6] , [158 : 6] , [160 : 5] , [161 : 5] , [162 : 5] , [163 : 5] , [164 : 5] , [165 : 5] , [166 : 5] , [167 : 4] , [193 : 1] 
+Vehiculo: 69 [Ordenes, demandas]: [168 : 4] , [169 : 4] , [170 : 4] , [171 : 4] , [172 : 4] , [173 : 4] , [174 : 4] , [175 : 4] , [176 : 4] , [177 : 4] , [179 : 3] , [180 : 3] , [181 : 3] , [182 : 3] , [183 : 3] , [185 : 2] , [186 : 2] , [187 : 2] , [188 : 2] , [189 : 2] , [194 : 1] , [195 : 1] , [196 : 1] , [197 : 1] , [198 : 1] , [199 : 1] 
 
-Vehicle 41 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 40 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 39 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 38 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 37 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 36 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 35 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 34 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 33 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 32 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 31 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 30 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 29 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 28 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 27 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 26 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 25 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 24 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 23 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 22 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 21 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 100
-Vehicle 20 Type 1 Capacity Total 100 TimeSlot 1: Total Demands 71
+Vehicle 83 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 82 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 81 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 80 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 79 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 78 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 77 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 76 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 75 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 74 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 73 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 72 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 71 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 70 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 150
+Vehicle 69 Type 2 Capacity Total 150 TimeSlot 2: Total Demands 71
 
-Used vehicles 22 Sum of occupied capacities 2171
-Obj Fuction ( d1*Th + Chk [+ &hk] [+ Ca])  ( 19 * 3 + 100 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 19 * 3 + 100 )  + ( 18 * 3 + 100 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 18 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 )  + ( 17 * 3 + 100 + 100 )  + ( 17 * 3 + 100 )  + ( 16 * 3 + 100 )  + ( 16 * 3 + 100 )  + ( 16 * 3 + 100 )  + ( 16 * 3 + 100 )  + ( 16 * 3 + 100 + 100 )  + ( 16 * 3 + 100 )  + ( 16 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 15 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 14 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 13 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 )  + ( 12 * 3 + 100 + 100 )  + ( 12 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 11 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 )  + ( 10 * 3 + 100 + 100 )  + ( 10 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 + 100 )  + ( 9 * 3 + 100 )  + ( 9 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 8 * 3 + 100 )  + ( 7 * 3 + 100 )  + ( 7 * 3 + 100 )  + ( 7 * 3 + 100 )  + ( 7 * 3 + 100 )  + ( 7 * 3 + 100 )  + ( 7 * 3 + 100 + 100 )  + ( 7 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 6 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 5 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 4 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 3 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 2 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 )  + ( 1 * 3 + 100 ) 
+vehiculos usados 15 Suma de capacidades ocupadas 2171
 MPVSBPP_SET1_IT200_ITV2_NT2_TS3_WT1_VT1_REP2.dat
-Heuristic Result: 28713 Delay in milliseconds after print: 0
+Heuristic Result: 22997
+Delay in milliseconds after print: 0

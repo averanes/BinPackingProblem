@@ -31,7 +31,7 @@ public class BinPackingProblem {
         File[] files = new File(".").listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".dat");
+                return name.endsWith(".dat") && !name.startsWith("MPVSBPP_SET1_IT5000");
             }
         });
 
@@ -39,7 +39,7 @@ public class BinPackingProblem {
         // System.out.println("Heuristic Method Value: " + ResolverController.getInstance(new File("MPVSBPP_SET1_IT5000_ITV1_NT2_TS3_WT1_VT1_REP1.dat")).heuristicResolver());
         //realizamos los algoritmos para cada dataset
         int minimumCost;
-        int sumCost = 0; //   FULL-RESULT 31731024
+        int sumCost = 0;  //sumCost 7183055   FULL-RESULT 31731024
         String excelFilePath = "results-assignment.xlsx";
 
         try {
@@ -55,7 +55,7 @@ public class BinPackingProblem {
                 m.runAndPrintSolution = 2; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
 
                 long startTime = System.currentTimeMillis();
-                minimumCost = m.heuristicResolverPerfect();
+                minimumCost = m.heuristicResolverDoble();
                 long timeofExecution = System.currentTimeMillis() - startTime;
 
                 sumCost += minimumCost;
@@ -64,13 +64,13 @@ public class BinPackingProblem {
                     print(m.c, files[i].getName());
                     print(m.c, "Heuristic Result: " + minimumCost + "\n" + "Delay in milliseconds after print: " + timeofExecution);
                     m.c.saveFile();
-                } else if (m.runAndPrintSolution == 1) {
-
-                    // Imprimir este tiempo en el excel
-                    // print(m.c,"Heuristic Result: " + minimumCost + " Delay in milliseconds " + timeofExecution);
+                }  
+                
+                if (m.runAndPrintSolution != 0) {
+                    ManageExcel.updateExcel(workbook, files[i].getName(), minimumCost, timeofExecution, files.length, m.vehiclesCountByType, m.demandCountByTimeSlot);
                 }
                 
-                ManageExcel.updateExcel(workbook, files[i].getName(), minimumCost, timeofExecution, files.length, m.vehiclesCountByType, m.demandCountByTimeSlot);
+               
             }
 
             inputStream.close();
