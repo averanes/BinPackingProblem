@@ -46,7 +46,7 @@ public class BinPackingProblem {
             //ResolverController m = ResolverController.getInstance(new File("MPVSBPP_SET1_IT1000_ITV1_NT2_TS3_WT1_VT1_REP9.dat"));
             m.c=new CreateFileResult(files[i].getName());
              
-            m.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+            m.runAndPrintSolution = 2; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
            
 
             long startTime = System.currentTimeMillis();
@@ -55,10 +55,17 @@ public class BinPackingProblem {
             
             sumCost+=minimumCost;
             
+            if(m.runAndPrintSolution == 2){
             print(m.c, files[i].getName());
-            print(m.c,"Heuristic Method Value: " + minimumCost + " Delay in milliseconds: " + timeofExecution);
-            
+            print(m.c,"Heuristic Result: " + minimumCost + " Delay in milliseconds after print: " + timeofExecution);
             m.c.saveFile();
+            }else if(m.runAndPrintSolution == 1){
+           
+            // Imprimir este tiempo en el excel
+           // print(m.c,"Heuristic Result: " + minimumCost + " Delay in milliseconds " + timeofExecution);
+            
+            }  
+           
             
           
             

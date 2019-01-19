@@ -11,14 +11,12 @@ import domain.Order;
 import domain.SatelliteInTimeSlot;
 import domain.Vehicle;
 import domain.VeicType;
-import domain.PosValue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  *
@@ -39,7 +37,7 @@ public class ResolverController {
 
     public int cost_for_express = 1000;//ca the unit cost for an express delivery.
 
-    public CreateFileResult c;
+   
 
     private static ResolverController instance;
 
@@ -55,21 +53,24 @@ public class ResolverController {
     private ResolverController() {
 
     }
-
+    
+    //variables for show the logs of result
+    public CreateFileResult c;
     public int runAndPrintSolution = 0; //0 only run, 1 run and update the value for excel and 2 run, update the value for excel and print in Console
     public Map<Integer, Integer> vehiclesCountByType;
     public Map<Integer, Integer> demandCountByTimeSlot;
+    public String valuesOfObjFunc;
 
     //Optimizado en base a disminuir el costo por parada
     public int heuristicResolverPerfect() {
 
-        //Optimizamos el tiempo con respecto a la Tarifa
+        //Creamos una lista de instantes de tiempo 
         List<Integer> timeSlotOrganized = new ArrayList<Integer>();
         for (int i = 0; i < timeslots; i++) {
             timeSlotOrganized.add(i);
         }
 
-        //organizamos los instantes de tiempo con respecto a la suma de costos por parada (ascendente)
+        //organizamos los instantes de tiempo con respecto a la Tarifa
         timeSlotOrganized.sort(new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
@@ -114,12 +115,14 @@ public class ResolverController {
             }
         });
 
+        
         int resultSumMinFirst = 0; //Result for the Greddy solution 1
         int[] demandInTime = new int[timeslots];//Se utiliza para controlar el (CONSTRAIN 1)
         int[][] vehicleUseCapacityInTime = new int[vehiclesCount][timeslots];//Se utiliza para controlar el (CONSTRAIN 2)
         boolean orderIsSatisfied = false; //Se utiliza para controlar el (CONSTRAIN 3)
 
         HashMap<Integer, String> ordersByVehicleOnlyForTestSolution = new HashMap<Integer, String>();//Est variable es solo para almacenar datos para probar la solucion
+        valuesOfObjFunc = "";
 
         //CALCULANDO LA FUNCION OBJETIVO
         for (int i = 0; i < orders; i++) {
@@ -145,9 +148,22 @@ public class ResolverController {
                             //agregamos el costo por parada para el vehicle k en el instante de tiempo h
                             resultSumMinFirst += vehic.getCost_per_stop().get(h);
 
+                            if (runAndPrintSolution == 2){
+                                 valuesOfObjFunc += " + ( "+order.getDemand()+" * "+satellite_time_slot.get(h).getTarif();
+                                 valuesOfObjFunc += " + "+vehic.getCost_per_stop().get(h);
+                                }
+                            
                             //AGREGAMOS EL COSTO FIJO DE USAR EL VEHICULO (Si es la primera demanda para el vehiculo en este instante de tiempo)
                             if (vehicleUseCapacityInTime[k][h] == 0) { //Si esto no es 0 es porque ya se sumo el vehiculo k en el instante de tiempo h
                                 resultSumMinFirst += vehic.getVtype().getVeicCost();
+                                
+                                if (runAndPrintSolution == 2){
+                                valuesOfObjFunc += " + "+vehic.getVtype().getVeicCost()+" ) ";
+                                }
+                            }else{
+                            if (runAndPrintSolution == 2){
+                                valuesOfObjFunc += " ) ";
+                                }
                             }
 
                             //LA SUMATORIA DE LOS ENVIOS EXPRESS SE REALIZA AL FINAL SI NO SE PUDO ENVIAR DE FORMA NORMAL
@@ -175,12 +191,16 @@ public class ResolverController {
             if (!orderIsSatisfied) {
                 resultSumMinFirst += cost_for_express; //si no se puede enviar con ningun vehiculo se envia por express
 
+                               if (runAndPrintSolution == 2){
+                                 valuesOfObjFunc += " [ "+cost_for_express+" ] ";
+                                }
+                
                 System.out.println("Orden " + i + " Vehicle EXPRESS");
             }
         }
 
         if (runAndPrintSolution != 0) {
-
+            
             demandCountByTimeSlot = new HashMap<Integer, Integer>();
             //comprobando Satelite en instante de tiempo (capacidad con usado)
             for (int h = 0; h < timeslots; h++) {
@@ -199,7 +219,7 @@ public class ResolverController {
             }
 
             if (runAndPrintSolution == 2) {
-                print(c, "Suma de demandas " + total);
+                print(c, "Sum of demands " + total);
             }
 
             for (Map.Entry<Integer, String> en : ordersByVehicleOnlyForTestSolution.entrySet()) {
@@ -207,7 +227,7 @@ public class ResolverController {
                 String value = en.getValue();
 
                 if (runAndPrintSolution == 2) {
-                    print(c, "Vehiculo: " + vehicles.get(key).getPosition() + " [Ordenes, demandas]: " + value);
+                    print(c, "Vehicle: " + vehicles.get(key).getPosition() + " [Orders, Demands]: " + value);
                 }
             }
 
@@ -247,10 +267,14 @@ public class ResolverController {
 
             if (runAndPrintSolution == 2) {
                 print(c, "");
-                print(c, "vehiculos usados " + vehicleUsedCount + " Suma de capacidades ocupadas " + total);
+                print(c, "Used vehicles " + vehicleUsedCount + " Sum of occupied capacities " + total);
+                
+            valuesOfObjFunc = "Obj Fuction ( d1*Th + Chk [+ &hk] [+ Ca]) "+valuesOfObjFunc.substring(2);     
+            print(c, valuesOfObjFunc);
             }
 
         }
+        
 
         return resultSumMinFirst;
 
