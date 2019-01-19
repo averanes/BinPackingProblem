@@ -64,11 +64,18 @@ public class ResolverController {
     //Optimizado en base a disminuir el costo por parada
     public int heuristicResolverPerfect() {
 
+        //ordenamos la lista de ordenes de forma Descendente con respecto a la capacidad
+        orders_demand.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return (o2.getDemand() - o1.getDemand());//order DESC
+            }
+        });
+        
+        
         //Creamos una lista de instantes de tiempo 
         List<Integer> timeSlotOrganized = new ArrayList<Integer>();
-        for (int i = 0; i < timeslots; i++) {
-            timeSlotOrganized.add(i);
-        }
+        for (int i = 0; i < timeslots; timeSlotOrganized.add(i++));
 
         //organizamos los instantes de tiempo con respecto a la Tarifa
         timeSlotOrganized.sort(new Comparator<Integer>() {
@@ -78,19 +85,6 @@ public class ResolverController {
             }
         });
         //timeSlotOrganized es siempre [1, 2, 0] con los juegos de datos que tenemos
-
-        //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
-        int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
-        //if(timeslots>1 && satellite_time_slot.get(timeSlotOrganized.get(0).pos).getTarif() > satellite_time_slot.get(timeSlotOrganized.get(1).pos).getTarif() )
-        // tipoDeOrdenamientoPrueba = 1;
-
-        //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
-        orders_demand.sort(new Comparator<Order>() {
-            @Override
-            public int compare(Order o1, Order o2) {
-                return (o1.getDemand() - o2.getDemand()) * tipoDeOrdenamientoPrueba;
-            }
-        });
 
         //ordenamos la lista de vehiculos de forma creciente con respecto a los costos x parada en el 1er instante de tiempo q estan ordenados y si tienen el mismo valor con respecto a la proporcion Volume / Cost, si todo esto sigue siendo igual se ordena creciente con respecto a los costos x parada en el 2do y 3er instante 
         vehicles.sort(new Comparator<Vehicle>() {
@@ -103,12 +97,8 @@ public class ResolverController {
                     comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
                 }
 
-                if (comparator == 0 && timeSlotOrganized.size() > 1) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1)) - o2.getCost_per_stop().get(timeSlotOrganized.get(1));
-                }
-
-                if (comparator == 0 && timeSlotOrganized.size() > 2) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2)) - o2.getCost_per_stop().get(timeSlotOrganized.get(2));
+                for (int i = 1; comparator == 0 && i < timeSlotOrganized.size(); i++) {
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i)) - o2.getCost_per_stop().get(timeSlotOrganized.get(i));
                 }
 
                 return comparator;

@@ -69,7 +69,7 @@ public class BinPackingProblem {
             
           
             
-            //ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
+            ManageExcel.updateExcel(excelFilePath, files[i].getName(), minimumCost, timeofExecution, files.length);
             
 
         }
