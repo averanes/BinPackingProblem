@@ -112,13 +112,14 @@ public class ResolverController {
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
-                int comparator = 0;
-                for (int i = 0; comparator == 0 && i < timeSlotOrganized.size(); i++) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).time);
-
-                    if (comparator == 0) {
+                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).time);
+                
+                if (comparator == 0) {
                         comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
                     }
+                
+                for (int i = 1; comparator == 0 && i < timeSlotOrganized.size(); i++) {
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).time); 
                 }
 
                 return comparator;
