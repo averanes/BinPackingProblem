@@ -37,7 +37,7 @@ public class ResolverController {
 
     public List<SatelliteInTimeSlot> satellite_time_slot; //Capacity and Tarif of satellite in each timeslot (Depot Cap[timeslots] and Tarif[timeslots])
 
-    public int cost_for_express = 1000;//ca the unit cost for an express delivery.
+    public int cost_for_express = 10000;//ca the unit cost for an express delivery.
 
     public CreateFileResult c;
 
