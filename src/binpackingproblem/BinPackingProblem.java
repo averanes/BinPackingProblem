@@ -52,7 +52,7 @@ public class BinPackingProblem {
                 //ResolverController m = ResolverController.getInstance(new File("MPVSBPP_SET1_IT1000_ITV1_NT2_TS3_WT1_VT1_REP9.dat"));
                 m.c = new CreateFileResult(files[i].getName());
 
-                m.runAndPrintSolution = 2; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+                m.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
 
                 long startTime = System.currentTimeMillis();
                 minimumCost = m.heuristicResolverDoble();

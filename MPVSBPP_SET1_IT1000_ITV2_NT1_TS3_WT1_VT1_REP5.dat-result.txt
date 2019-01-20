@@ -224,4 +224,4 @@ Vehicle 106 Type 1 Capacity Total 100 TimeSlot 2: Total Demands 46
 vehiculos usados 108 Suma de capacidades ocupadas 10746
 MPVSBPP_SET1_IT1000_ITV2_NT1_TS3_WT1_VT1_REP5.dat
 Heuristic Result: 116022
-Delay in milliseconds after print: 14
+Delay in milliseconds after print: 0

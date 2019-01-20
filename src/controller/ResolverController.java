@@ -220,11 +220,14 @@ public class ResolverController {
                 }
 
                 if (comparator == 0) {
+                    comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
+                }
+               /* if (comparator == 0) {
                     comparator = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
                 }
 
                 comparator = comparator == 0 ? (o2.getVtype().getVeicVolume() - o1.getVtype().getVeicVolume()) : comparator; //DESC
-
+                */
                 return comparator;
             }
         });
