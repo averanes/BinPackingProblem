@@ -56,7 +56,7 @@ public class ResolverController {
 
     }
 
-    public int runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+    public static int runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
     public Map<Integer, Integer> vehiclesCountByType;
     public Map<Integer, Integer> demandCountByTimeSlot;
 
@@ -91,7 +91,6 @@ public class ResolverController {
             }
         }
 
-        
         //organizamos los instantes de tiempo con respecto a la suma de costos por parada por instante de tiempo (ascendente)
         timeSlotOrganized.sort(new Comparator<TimeValue>() {
             @Override
@@ -101,30 +100,25 @@ public class ResolverController {
         });
         //timeSlotOrganized es siempre [2, 0, 1] con los juegos de datos que tenemos
 
-        
-       
         //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
         orders_demand.sort(new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                return o2.getDemand() - o1.getDemand() ; //Order Descendente
+                return o2.getDemand() - o1.getDemand(); //Order Descendente
             }
         });
 
-        
         //ordenamos la lista de vehiculos de forma creciente con respecto a los costos x parada en el 1er instante de tiempo q estan ordenados y si tienen el mismo valor con respecto a la proporcion Volume / Cost, si todo esto sigue siendo igual se ordena creciente con respecto a los costos x parada en el 2do y 3er instante 
         vehicles.sort(new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
-
-                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).time);
-
-                if (comparator == 0) {
-                    comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
-                }
-
-                for (int i = 1; comparator == 0 && i < timeSlotOrganized.size(); i++) {
+                int comparator = 0;
+                for (int i = 0; comparator == 0 && i < timeSlotOrganized.size(); i++) {
                     comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).time);
+
+                    if (comparator == 0) {
+                        comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
+                    }
                 }
 
                 return comparator;
@@ -222,12 +216,12 @@ public class ResolverController {
                 if (comparator == 0) {
                     comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
                 }
-               /* if (comparator == 0) {
+                /* if (comparator == 0) {
                     comparator = o1.getVtype().getVeicCost() - o2.getVtype().getVeicCost();
                 }
 
                 comparator = comparator == 0 ? (o2.getVtype().getVeicVolume() - o1.getVtype().getVeicVolume()) : comparator; //DESC
-                */
+                 */
                 return comparator;
             }
         });

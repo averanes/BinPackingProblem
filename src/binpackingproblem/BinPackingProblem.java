@@ -43,16 +43,20 @@ public class BinPackingProblem {
         String excelFilePath = "results-assignment.xlsx";
 
         try {
-            FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
-            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            ResolverController.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
+
+            FileInputStream inputStream = null;
+            XSSFWorkbook workbook = null;
+            if (ResolverController.runAndPrintSolution != 0) {
+                inputStream = new FileInputStream(new File(excelFilePath));
+                workbook = new XSSFWorkbook(inputStream);
+            }
 
             for (int i = 0; i < files.length; i++) {
 
                 ResolverController m = ResolverController.getInstance(files[i]);
                 //ResolverController m = ResolverController.getInstance(new File("MPVSBPP_SET1_IT1000_ITV1_NT2_TS3_WT1_VT1_REP9.dat"));
                 m.c = new CreateFileResult(files[i].getName());
-
-                m.runAndPrintSolution = 0; //0 solo run, 1 run and update the value for excel and 2 1 run, update the value for excel and print in Console
 
                 long startTime = System.currentTimeMillis();
                 minimumCost = m.heuristicResolverDoble();
@@ -64,22 +68,22 @@ public class BinPackingProblem {
                     print(m.c, files[i].getName());
                     print(m.c, "Heuristic Result: " + minimumCost + "\n" + "Delay in milliseconds after print: " + timeofExecution);
                     m.c.saveFile();
-                }  
-                
+                }
+
                 if (m.runAndPrintSolution != 0) {
                     ManageExcel.updateExcel(workbook, files[i].getName(), minimumCost, timeofExecution, files.length, m.vehiclesCountByType, m.demandCountByTimeSlot);
                 }
-                
-               
+
             }
 
-            workbook.setForceFormulaRecalculation(true);
-            inputStream.close();
-            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
-            workbook.write(outputStream);
-            workbook.close();
-            outputStream.close();
-            
+            if (ResolverController.runAndPrintSolution != 0) {
+                workbook.setForceFormulaRecalculation(true);
+                inputStream.close();
+                FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+                workbook.write(outputStream);
+                workbook.close();
+                outputStream.close();
+            }
         } catch (Exception ex) {
             Logger.getLogger(BinPackingProblem.class.getName()).log(Level.SEVERE, null, ex);
         }
