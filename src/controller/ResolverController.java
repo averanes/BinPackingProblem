@@ -11,7 +11,7 @@ import domain.Order;
 import domain.SatelliteInTimeSlot;
 import domain.Vehicle;
 import domain.VeicType;
-import domain.PosValue;
+import domain.TimeValue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -65,9 +65,9 @@ public class ResolverController {
 
         //El costo por parada aporta la mayor variacion de valor, entonces optimizando con respecto a esto se obtienen los mejores resultados
         //Por cada instante de tiempo sumamos el total de los costos por parada
-        List<PosValue> timeSlotOrganized = new ArrayList<PosValue>();
+        List<TimeValue> timeSlotOrganized = new ArrayList<TimeValue>();
         for (int i = 0; i < timeslots; i++) {
-            timeSlotOrganized.add(new PosValue(i, 0));
+            timeSlotOrganized.add(new TimeValue(i, 0));
         }
 
         // order TimeSlot by Sum of cost by stop of the tipe of vehicles
@@ -93,9 +93,9 @@ public class ResolverController {
 
         
         //organizamos los instantes de tiempo con respecto a la suma de costos por parada por instante de tiempo (ascendente)
-        timeSlotOrganized.sort(new Comparator<PosValue>() {
+        timeSlotOrganized.sort(new Comparator<TimeValue>() {
             @Override
-            public int compare(PosValue o1, PosValue o2) {
+            public int compare(TimeValue o1, TimeValue o2) {
                 return o1.value - o2.value;
             }
         });
@@ -117,14 +117,14 @@ public class ResolverController {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
 
-                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
+                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).time);
 
                 if (comparator == 0) {
                     comparator = -1 * ((int) (((float) o1.getVtype().getVeicVolume() / (float) o1.getVtype().getVeicCost()) * 100)) - (int) (((float) o2.getVtype().getVeicVolume() / (float) o2.getVtype().getVeicCost()) * 100);
                 }
 
                 for (int i = 1; comparator == 0 && i < timeSlotOrganized.size(); i++) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).pos);
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).time);
                 }
 
                 return comparator;
@@ -144,7 +144,7 @@ public class ResolverController {
             orderIsSatisfied = false;
 
             for (int h1 = 0; h1 < timeslots && orderIsSatisfied == false; h1++) {
-                int h = timeSlotOrganized.get(h1).pos;
+                int h = timeSlotOrganized.get(h1).time;
 
                 //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
                 if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
@@ -216,7 +216,7 @@ public class ResolverController {
                 int comparator = 0;
 
                 for (int i = 0; comparator == 0 && i < timeSlotOrganized.size(); i++) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).pos);
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(i).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(i).time);
                 }
 
                 if (comparator == 0) {
@@ -241,7 +241,7 @@ public class ResolverController {
             orderIsSatisfied = false;
 
             for (int h1 = 0; h1 < timeslots && orderIsSatisfied == false; h1++) {
-                int h = timeSlotOrganized.get(h1).pos;
+                int h = timeSlotOrganized.get(h1).time;
 
                 //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
                 if (demandInTime2[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
@@ -459,9 +459,9 @@ public class ResolverController {
 
         //El costo por parada aporta la mayor variacion de valor, entonces optimizando con respecto a esto se obtienen los mejores resultados
         //Por cada instante de tiempo sumamos el total de los costos por parada
-        List<PosValue> timeSlotOrganized = new ArrayList<PosValue>();
+        List<TimeValue> timeSlotOrganized = new ArrayList<TimeValue>();
         for (int i = 0; i < timeslots; i++) {
-            timeSlotOrganized.add(new PosValue(i, 0));
+            timeSlotOrganized.add(new TimeValue(i, 0));
         }
 
         for (int i = 0; i < vehiclesCount; i++) {
@@ -471,9 +471,9 @@ public class ResolverController {
         }
 
         //organizamos los instantes de tiempo con respecto a la suma de costos por parada (ascendente)
-        timeSlotOrganized.sort(new Comparator<PosValue>() {
+        timeSlotOrganized.sort(new Comparator<TimeValue>() {
             @Override
-            public int compare(PosValue o1, PosValue o2) {
+            public int compare(TimeValue o1, TimeValue o2) {
                 return o1.value - o2.value;
             }
         });
@@ -481,7 +481,7 @@ public class ResolverController {
 
         //Valor 1 genera Ordenamiento Ascendente y -1 Descendente
         int tipoDeOrdenamientoPrueba = -1; //Esta variable es solo para probar si es mejor ordenar ascendente o descendente
-        //if(timeslots>1 && satellite_time_slot.get(timeSlotOrganized.get(0).pos).getTarif() > satellite_time_slot.get(timeSlotOrganized.get(1).pos).getTarif() )
+        //if(timeslots>1 && satellite_time_slot.get(timeSlotOrganized.get(0).time).getTarif() > satellite_time_slot.get(timeSlotOrganized.get(1).time).getTarif() )
         // tipoDeOrdenamientoPrueba = 1;
 
         //ordenamos la lista de ordenes de forma $tipoDeOrdenamientoPrueba con respecto a la capacidad
@@ -497,13 +497,13 @@ public class ResolverController {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
 
-                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).pos);
+                int comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(0).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(0).time);
 
                 /*if (comparator == 0 && timeSlotOrganized.size() > 1) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).pos);
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(1).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(1).time);
                 }
                 if (comparator == 0 && timeSlotOrganized.size() > 2) {
-                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).pos) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).pos);
+                    comparator = o1.getCost_per_stop().get(timeSlotOrganized.get(2).time) - o2.getCost_per_stop().get(timeSlotOrganized.get(2).time);
                 }*/
  /*if(comparator == 0 ){
                 if(!vehicleType.containsKey(o1.getVtype().getNumOfVeicType())){
@@ -545,7 +545,7 @@ public class ResolverController {
             orderIsSatisfied = false;
 
             for (int h1 = 0; h1 < timeslots && orderIsSatisfied == false; h1++) {
-                int h = timeSlotOrganized.get(h1).pos;
+                int h = timeSlotOrganized.get(h1).time;
 
                 //(CONSTRAIN 1) Las sumas de las demandas que se envian en un instante de tiempo tienen que ser menor o igual a la capacidad del satelite en ese instante
                 if (demandInTime[h] + order.getDemand() <= satellite_time_slot.get(h).getCapacity()) {
