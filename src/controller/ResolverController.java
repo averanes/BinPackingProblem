@@ -70,26 +70,12 @@ public class ResolverController {
             timeSlotOrganized.add(new TimeValue(i, 0));
         }
 
-        // order TimeSlot by Sum of cost by stop of the tipe of vehicles
-        if (vehiclesCount <= 3) {
-            for (int j = 0; j < timeslots; j++) {
-
-                timeSlotOrganized.get(j).sumValue(vehicles.get(0).getCost_per_stop().get(j));
-
-                if (vehiclesCount > 1) {
-                    timeSlotOrganized.get(j).sumValue(vehicles.get(vehiclesCount / 2).getCost_per_stop().get(j));
-                }
-                if (vehiclesCount > 2) {
-                    timeSlotOrganized.get(j).sumValue(vehicles.get(vehiclesCount / 3).getCost_per_stop().get(j));
-                }
-            }
-        } else {//Esto es por si se agregan mas de 3 vehiculos pero en la tarea nunca sucede
             for (int i = 0; i < vehiclesCount; i++) {
                 for (int j = 0; j < timeslots; j++) {
                     timeSlotOrganized.get(j).sumValue(vehicles.get(i).getCost_per_stop().get(j));
                 }
             }
-        }
+        
 
         //organizamos los instantes de tiempo con respecto a la suma de costos por parada por instante de tiempo (ascendente)
         timeSlotOrganized.sort(new Comparator<TimeValue>() {
